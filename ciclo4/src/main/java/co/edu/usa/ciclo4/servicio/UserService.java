@@ -5,10 +5,43 @@
  */
 package co.edu.usa.ciclo4.servicio;
 
+import co.edu.usa.ciclo4.modelo.User;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
+import co.edu.usa.ciclo4.repositorio.*;
+import java.util.List;
+import java.util.Optional;
 /**
  *
  * @author HeerJHobby
  */
+@Service
 public class UserService {
-    
+     @Autowired
+     private UserRepository metodosCrud;
+     
+public List<User> getAll(){
+        return metodosCrud.getAll();
+    }
+
+public Optional<User> getUser(int usuarioId) {
+        return metodosCrud.getUser(usuarioId);
+    }
+
+public User save(User usuario){
+        if(usuario.getId()==null){
+            return metodosCrud.save(usuario);
+        }else{
+            Optional<User> e= metodosCrud.getUser(usuario.getId());
+            if(e.isPresent()){
+                return metodosCrud.save(usuario);
+            }else{
+                return usuario;
+            }
+            
+        }
+    }
+public String getByEmail(String correo){
+    return metodosCrud.getByEmail(correo);
+}
 }
