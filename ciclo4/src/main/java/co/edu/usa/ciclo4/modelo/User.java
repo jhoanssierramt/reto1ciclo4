@@ -10,7 +10,7 @@ package co.edu.usa.ciclo4.modelo;
  * 
  * @author Grupo G9 Cilco-4
  */
-import com.sun.istack.internal.NotNull;
+
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
@@ -26,8 +26,7 @@ public class User {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @Column(length = 11)
-    @NotNull
+    @Column(length = 11,nullable = false)
     private Integer id;
     @Column(length = 50,nullable = false)
 
