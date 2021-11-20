@@ -20,7 +20,7 @@ import javax.persistence.Table;
 import javax.persistence.UniqueConstraint;
 
 @Entity
-@Table(name = "user",uniqueConstraints=@UniqueConstraint(columnNames={"user_email"}))
+@Table(name = "user",uniqueConstraints=@UniqueConstraint(columnNames={"email"}))
 
 public class User {
 
@@ -30,13 +30,13 @@ public class User {
     private Integer id;
     @Column(length = 50,nullable = false)
 
-    private String user_email;
+    private String email;
     @Column(length = 80,nullable = false)
     
-    private String user_name;
+    private String name;
     @Column(length = 50, nullable = false)
    
-    private String user_password;
+    private String password;
 
     public Integer getId() {
         return id;
@@ -46,28 +46,28 @@ public class User {
         this.id = id;
     }
 
-    public String getUser_email() {
-        return user_email;
+    public String getEmail() {
+        return email;
     }
 
-    public void setUser_email(String user_email) {
-        this.user_email = user_email;
+    public void setEmail(String email) {
+        this.email = email;
     }
 
-    public String getUser_name() {
-        return user_name;
+    public String getName() {
+        return name;
     }
 
-    public void setUser_name(String user_name) {
-        this.user_name = user_name;
+    public void setName(String name) {
+        this.name = name;
     }
 
-    public String getUser_password() {
-        return user_password;
+    public String getPassword() {
+        return password;
     }
 
-    public void setUser_password(String user_password) {
-        this.user_password = user_password;
+    public void setPassword(String password) {
+        this.password = password;
     }
 
 }
