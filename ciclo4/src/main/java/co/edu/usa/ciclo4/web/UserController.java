@@ -21,30 +21,67 @@ import org.springframework.web.bind.annotation.ResponseStatus;
 import org.springframework.web.bind.annotation.RestController;
 
 /**
+ * Clase Controller User
  *
- * @author HeerJHobby
+ * @version 1.0
+ * @author Sierra Rojas Trejos Garcia Herrera
  */
 @RestController
 @RequestMapping("/api/user")
-@CrossOrigin(origins = "*", methods= {RequestMethod.GET,RequestMethod.POST,RequestMethod.PUT,RequestMethod.DELETE})
+@CrossOrigin(origins = "*", methods = {RequestMethod.GET, RequestMethod.POST, RequestMethod.PUT, RequestMethod.DELETE})
 
-public class UserController  {
-@Autowired
+public class UserController {
+
+    /**
+     * Variable que representa el servicio de Usuario
+     */
+    @Autowired
     private UserService servicio;
 
-@GetMapping("/all")
-    public List<User> getUsers(){
+    /**
+     * Método para obtener el listado de Usuarios existentes
+     *
+     * @return listado de Usuarios formato JSON
+     */
+    @GetMapping("/all")
+    public List<User> getUsers() {
         return servicio.getAll();
     }
 
-@PostMapping("/new")
+    /**
+     * Método para crear una Usuario
+     *
+     * @param usuario
+     * @return Usuario
+     * @paramid identificador de Usuario
+     *
+     */
+    @PostMapping("/new")
     @ResponseStatus(HttpStatus.CREATED)
     public User save(@RequestBody User usuario) {
         return servicio.save(usuario);
     }
-    
-@GetMapping("/{email}")    
-public String getUsersByEmail(@PathVariable("email") String email){
+
+    /**
+     * Método para Consultar un Email
+     *
+     * @param email Consultado
+     * @return Usuario en formato JSON
+     */
+    @GetMapping("/{email}")
+    public String getUsersByEmail(@PathVariable("email") String email) {
         return servicio.getByEmail(email);
+    }
+
+    /**
+     * Método para Consultar un email y password Usuario
+     *
+     * @param email
+     * @param password
+     * @return Usuario y datos en formato JSON
+     */
+    @GetMapping("/{email}/{pass}")
+    public User checkEmailAndPassw(@PathVariable("email") String email, @PathVariable("pass") String password) {
+        return servicio.checkEmailAndPassw(email, password);
     }
 }
