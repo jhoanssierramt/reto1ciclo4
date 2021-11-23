@@ -4,6 +4,7 @@
  * de que los elementos HTML esten cargados
  * 
  */
+
  window.onload = function(){
  
     document.getElementById("formulario").addEventListener("submit", ingreso);
@@ -21,8 +22,8 @@
   * funcion que se ejecuta al detectar el evento click en el boton
   * de ingreso
   */
- function ingreso(){
  
+  async function ingreso(){
      console.log("se pulsó el boton de Ingreso");
  
      /**
@@ -50,63 +51,80 @@
               * En caso de que haya diligenciado tanto correo como contraseña:
               * se ejecuta peticion GET, AJAX.
               */
-             validarEmailPassword($email,$password);
+             //validarEmailPassword($email,$password);
+             await checkEmailAndPass($email, $password);
          } 
  }
- 
- /**
-  * Funcion ajax
-  * 
-  * @param {} email 
-  * @param {*} password 
-  */
- function validarEmailPassword(email,password){
- 
-     /**
-      * peticion AJAX GET para validar si existe el correo y la clave
-      * esta relacionada
-      * 
-      */
-     $.ajax (
-                 {
-                     url          :  BASE_URL+'/'+email+"/"+password,
-                     type         : 'GET',
-                     dataType     : 'json',
-                     success      :  function(json){
-                                         console.log("-- Respuesta GET --");
-                                         console.log(json);
-                                         respuestaIngreso(json);
-                                     },
-                     error        :   function(xhr,status){
-                                         console.log("Error --> ",status)
-                                     },
-                     complete     :  function(xhr,status){
-                                         console.log("Peticion GET validarEmailPassword completada -->",status)
-                                     }
-                 }
-         );
- }
- 
+  
  /**
   * Funcion de prueba utilizada para confirmar al usuario
   * si los datos de inicio existen en el sistema
   * @param {*} json 
   */
- function respuestaIngreso(json){
- 
+
+function respuestaIngreso(json){
+    
      if(json.name != "NO DEFINIDO"){
-         alert("La informacion de inicio de sesion es CORRECTA");
+        //alert("La informacion de inicio de sesion es CORRECTA");
+        
+        mostrarMensaje("La informacion de inicio de sesion es CORRECTA");
          window.location.href = "home.html?email="+json.email+"&pswd="+json.password+"&name="+json.name;
      }
      else{
-         alert("La informacion de inicio de sesion es INCORRECTA");
+        //alert("La informacion de inicio de sesion es INCORRECTA");
+        
+        mostrarMensaje("La informacion de inicio de sesion es INCORRECTA");
      }
  
  }
  
  
  function registro(){
- 
+ mostrarMensaje("holamundo");
      console.log("se pulso el boton de Registro");
  
  }
+
+ async function checkEmailAndPass(email, password) {
+      try {
+      
+      const url = BASE_URL+'/'+email+"/"+password;
+      console.log("url: ", url);
+      const fetchOptions = {
+        method: "GET",
+        headers: {
+          "Content-type": "application/json; charset=UTF-8",
+        },
+      };
+      const response = await fetch(url, fetchOptions);
+      const responseConverted = await response.json();
+      console.log(`esta es la respuesta`, responseConverted);
+      //console.log(`name`, responseConverted.name);
+      respuestaIngreso(responseConverted);
+      //if(responseConverted && responseConverted.token){
+  
+      //}
+    } catch (error) {
+      console.log(`error`, error);
+    }
+}
+
+
+var cerrarModal = function () {
+    $('#modalRegistro').modal('hide');
+    //document.getElementById('modalRegistro').style.display='none';
+}
+
+
+function mostrarMensaje(mensaje) {
+
+    $("#mensaje").html(mensaje);
+    $('#modalMensaje').modal('show');
+    console.log("ingresa a mostrar mensaje");
+    //document.getElementById('modalRegistro').style.display='';
+}
+
+var cerrarModalMensaje = function(){
+    $('#modalMensaje').modal('hide');
+}
+
