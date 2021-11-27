@@ -22,11 +22,12 @@ public class UserService {
     @Autowired
     private UserRepository metodosCrud;
     
+    //@Transactional (readOnly = true)
     public List<User> getAll() {
         return metodosCrud.getAll();
     }
     
-    public Optional<User> getUser(int usuarioId) {
+    public Optional<User> getUser(String usuarioId) {
         return metodosCrud.getUser(usuarioId);
     }
     
@@ -42,17 +43,24 @@ public class UserService {
             }
             
         }
+        //return metodosCrud.save(usuario);
     }
     
     public String getByEmail(String correo) {
-        return metodosCrud.getByEmail(correo);
+        String aux = metodosCrud.getByEmail(correo);
+        if (aux == null)
+            return "false";
+        else
+            return "true";
+ 
+        //return metodosCrud.getByEmail(correo);
     }
     
     public User checkEmailAndPassw(String email, String password) {
+        /*
         Optional<User> usuario = metodosCrud.checkEmailAndPassw(email, password);
         User userNew = new User();
         if (!usuario.isPresent()) {
-            
             userNew.setEmail(email);
             userNew.setPassword(password);
             userNew.setName("NO DEFINIDO");
@@ -61,5 +69,7 @@ public class UserService {
         }
         System.out.println("userNew:"+ userNew.getEmail());
         return userNew;
+        */
+        return metodosCrud.checkEmailAndPassw(email, password).orElse(new User());
     }
 }

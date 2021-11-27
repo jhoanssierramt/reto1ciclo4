@@ -11,63 +11,73 @@ package co.edu.usa.ciclo4.modelo;
  * @author Grupo G9 Cilco-4
  */
 
-import javax.persistence.Column;
-import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
+import java.util.Date;
+//import javax.persistence.GeneratedValue;
+//import javax.persistence.GenerationType;
 import javax.persistence.Id;
-import javax.persistence.Table;
-import javax.persistence.UniqueConstraint;
+import lombok.AllArgsConstructor;
+import lombok.Data;
+import lombok.Getter;
+import lombok.NoArgsConstructor;
+import lombok.NonNull;
+import lombok.Setter;
+import org.springframework.data.mongodb.core.mapping.Document;
+import org.springframework.data.mongodb.core.mapping.Field;
 
-@Entity
-@Table(name = "user",uniqueConstraints=@UniqueConstraint(columnNames={"email"}))
+//@Entity
+//@Table(name = "user",uniqueConstraints=@UniqueConstraint(columnNames={"email"}))
+@Data
+@AllArgsConstructor
+@NoArgsConstructor
+@Setter @Getter
 
+@Document (collection = "usuarios")
 public class User {
-
-    @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @Column(length = 11,nullable = false)
-    private Integer id;
     
-    @Column(length = 50,nullable = false)
+    @Id
+    //@GeneratedValue(strategy = GenerationType.IDENTITY)
+    //@Column(length = 11,nullable = false)
+    private String id;
+    
+    //@Column(length = 50,nullable = false)
+    @NonNull
+    @Field(name= "user_email")
     private String email;
     
-    @Column(length = 50, nullable = false)
+    //@Column(length = 50, nullable = false)
+    @NonNull
+    @Field(name= "user_password")
     private String password;
     
-    @Column(length = 80,nullable = false)
+    //@Column(length = 80,nullable = false)
+    @NonNull
+    @Field(name= "user_name")
     private String name;
-    
-    public Integer getId() {
+    /*
+    @Id
+    private String id;
+
+    private String identification;
+
+    private String name;
+
+    private Date birthtDay;
+
+    private String monthBirthtDay;
+
+    private String address;
+
+    private String cellPhone;
+
+    private String email;
+
+    private String password;
+
+    private String zone;
+
+    private String type;
+    */
+    public String getId() {
         return id;
     }
-
-    public void setId(Integer id) {
-        this.id = id;
-    }
-
-    public String getEmail() {
-        return email;
-    }
-
-    public void setEmail(String email) {
-        this.email = email;
-    }
-
-    public String getName() {
-        return name;
-    }
-
-    public void setName(String name) {
-        this.name = name;
-    }
-
-    public String getPassword() {
-        return password;
-    }
-
-    public void setPassword(String password) {
-        this.password = password;
-    }
-
 }

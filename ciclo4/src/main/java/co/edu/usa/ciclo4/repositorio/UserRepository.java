@@ -26,7 +26,7 @@ public class UserRepository {
         return (List<User>) crud.findAll();
     }
 
-    public Optional<User> getUser(int id) {
+    public Optional<User> getUser(String id) {
         return crud.findById(id);
     }
 
@@ -35,12 +35,11 @@ public class UserRepository {
     }
 
     public String getByEmail(String correo) {
-        return crud.getByEmail(correo);
+        return crud.getStoreByEmail(correo);
     }
 
     public Optional<User> checkEmailAndPassw(String email, String password) {
-        return crud.checkEmailAndPassw(email, password);
-
+        return crud.getStoreByEmailAndPassword(email, password);
     }
 
 }
