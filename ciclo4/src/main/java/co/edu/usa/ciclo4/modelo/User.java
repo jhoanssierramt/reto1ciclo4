@@ -29,55 +29,46 @@ import org.springframework.data.mongodb.core.mapping.Field;
 @Data
 @AllArgsConstructor
 @NoArgsConstructor
-@Setter @Getter
+@Setter 
+@Getter
 
-@Document (collection = "usuarios")
+@Document (collection = "users")
 public class User {
     
     @Id
-    //@GeneratedValue(strategy = GenerationType.IDENTITY)
-    //@Column(length = 11,nullable = false)
     private String id;
     
-    //@Column(length = 50,nullable = false)
+    @NonNull
+    @Field(name= "user_identification")
+    private String identification;
+    
+    @NonNull
+    @Field(name= "user_name")
+    private String name;
+    
+    @NonNull
+    @Field(name= "user_address")
+    private String address;
+    
+    @NonNull
+    @Field(name= "user_cellPhone")
+    private String cellPhone;
+
     @NonNull
     @Field(name= "user_email")
     private String email;
     
-    //@Column(length = 50, nullable = false)
     @NonNull
     @Field(name= "user_password")
     private String password;
     
-    //@Column(length = 80,nullable = false)
     @NonNull
-    @Field(name= "user_name")
-    private String name;
-    /*
-    @Id
-    private String id;
-
-    private String identification;
-
-    private String name;
-
-    private Date birthtDay;
-
-    private String monthBirthtDay;
-
-    private String address;
-
-    private String cellPhone;
-
-    private String email;
-
-    private String password;
-
+    @Field(name= "user_zone")
     private String zone;
-
+    
+    @NonNull
+    @Field(name= "user_type")
     private String type;
-    */
-    public String getId() {
-        return id;
-    }
+   
+    
 }

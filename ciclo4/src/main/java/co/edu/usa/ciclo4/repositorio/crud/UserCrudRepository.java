@@ -29,8 +29,8 @@ public interface UserCrudRepository extends CrudRepository<User, Integer>{
 
 public interface UserCrudRepository extends MongoRepository<User, String>{
     @Query("{email:?0}")
-    public String getStoreByEmail(String email);
+    public String getUserByEmail(String email);
     
     @Query("{email:?0, password:?1}")
-    public Optional<User> getStoreByEmailAndPassword(String email, String password);
+    public Optional<User> getUserByEmailAndPassword(String email, String password);
 }

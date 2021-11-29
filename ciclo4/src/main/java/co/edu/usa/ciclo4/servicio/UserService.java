@@ -18,19 +18,19 @@ import java.util.Optional;
  */
 @Service
 public class UserService {
-    
+
     @Autowired
     private UserRepository metodosCrud;
-    
+
     //@Transactional (readOnly = true)
     public List<User> getAll() {
         return metodosCrud.getAll();
     }
-    
+
     public Optional<User> getUser(String usuarioId) {
         return metodosCrud.getUser(usuarioId);
     }
-    
+
     public User save(User usuario) {
         if (usuario.getId() == null) {
             return metodosCrud.save(usuario);
@@ -41,35 +41,73 @@ public class UserService {
             } else {
                 return usuario;
             }
-            
+
         }
         //return metodosCrud.save(usuario);
     }
-    
+
     public String getByEmail(String correo) {
         String aux = metodosCrud.getByEmail(correo);
-        if (aux == null)
+        if (aux == null) {
             return "false";
-        else
+        } else {
             return "true";
- 
+        }
+
         //return metodosCrud.getByEmail(correo);
     }
-    
+
     public User checkEmailAndPassw(String email, String password) {
-        /*
+
         Optional<User> usuario = metodosCrud.checkEmailAndPassw(email, password);
         User userNew = new User();
-        if (!usuario.isPresent()) {
-            userNew.setEmail(email);
-            userNew.setPassword(password);
-            userNew.setName("NO DEFINIDO");
-        } else {
+
+        if (usuario.isPresent()) {
             userNew = usuario.orElse(userNew);
         }
-        System.out.println("userNew:"+ userNew.getEmail());
+        System.out.println("userNew:" + userNew.getEmail());
         return userNew;
-        */
-        return metodosCrud.checkEmailAndPassw(email, password).orElse(new User());
+
     }
+
+    public User updateUser(User usuario) {
+        if (usuario.getId() != null) {
+            Optional<User> userNew = metodosCrud.getUser(usuario.getId());
+            if (userNew.isPresent()) {
+                // Al usar la Anotacion @NotNull no es necesario hacer estas validaciones
+
+                // if (usuario.getIdentification() != null) 
+                userNew.get().setIdentification(usuario.getIdentification());
+                
+                userNew.get().setName(usuario.getName());
+
+                userNew.get().setAddress(usuario.getAddress());
+
+                userNew.get().setCellPhone(usuario.getCellPhone());
+
+                userNew.get().setEmail(usuario.getEmail());
+
+                userNew.get().setPassword(usuario.getPassword());
+
+                userNew.get().setZone(usuario.getZone());
+
+                userNew.get().setType(usuario.getType());
+
+                metodosCrud.save(userNew.get());
+                return userNew.get();
+            } else {
+                return usuario;
+            }
+        } else {
+            return usuario;
+        }
+    }
+    
+    public boolean deleteUser(String userId) {
+        Boolean aBoolean = getUser(userId).map(user -> {
+            metodosCrud.delete(user);
+            return true;
+        }).orElse(false);
+        return aBoolean;
+    } 
 }

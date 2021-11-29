@@ -25,7 +25,7 @@ public class Ciclo4Application {
     ApplicationRunner applicationRunner() {
         return args -> {
             List<User> listaUsuarios = repoUser.getAll();
-            System.out.println("Usuarios: " + listaUsuarios.size());
+            System.out.println("Users: " + listaUsuarios.size());
 
         };
     }
