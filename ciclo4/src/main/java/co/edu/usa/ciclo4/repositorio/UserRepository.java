@@ -35,11 +35,13 @@ public class UserRepository {
     }
 
     public String getByEmail(String correo) {
-        return crud.getStoreByEmail(correo);
+        return crud.getUserByEmail(correo);
     }
 
     public Optional<User> checkEmailAndPassw(String email, String password) {
-        return crud.getStoreByEmailAndPassword(email, password);
+        return crud.getUserByEmailAndPassword(email, password);
     }
-
+    public void delete(User user){
+        crud.delete(user);
+    }
 }
