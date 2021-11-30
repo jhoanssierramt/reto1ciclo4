@@ -6,9 +6,9 @@
 package co.edu.usa.ciclo4.servicio;
 
 import co.edu.usa.ciclo4.modelo.User;
+import co.edu.usa.ciclo4.repositorio.UserRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
-import co.edu.usa.ciclo4.repositorio.*;
 import java.util.List;
 import java.util.Optional;
 
@@ -22,22 +22,25 @@ public class UserService {
     @Autowired
     private UserRepository metodosCrud;
 
-    //@Transactional (readOnly = true)
     public List<User> getAll() {
         return metodosCrud.getAll();
     }
 
-    public Optional<User> getUser(String usuarioId) {
+    public Optional<User> getUser(Integer usuarioId) {
         return metodosCrud.getUser(usuarioId);
     }
 
     public User save(User usuario) {
         if (usuario.getId() == null) {
-            return metodosCrud.save(usuario);
+            return usuario;
         } else {
             Optional<User> e = metodosCrud.getUser(usuario.getId());
-            if (e.isPresent()) {
-                return metodosCrud.save(usuario);
+            if (!e.isPresent()) {
+                if("false".equals(getByEmail(usuario.getEmail()))){
+                    return metodosCrud.save(usuario);
+                } else {
+                    return usuario;
+                }
             } else {
                 return usuario;
             }
@@ -53,8 +56,6 @@ public class UserService {
         } else {
             return "true";
         }
-
-        //return metodosCrud.getByEmail(correo);
     }
 
     public User checkEmailAndPassw(String email, String password) {
@@ -65,7 +66,7 @@ public class UserService {
         if (usuario.isPresent()) {
             userNew = usuario.orElse(userNew);
         }
-        System.out.println("userNew:" + userNew.getEmail());
+        //System.out.println("userNew:" + userNew.getEmail());
         return userNew;
 
     }
@@ -103,7 +104,7 @@ public class UserService {
         }
     }
     
-    public boolean deleteUser(String userId) {
+    public boolean deleteUser(Integer userId) {
         Boolean aBoolean = getUser(userId).map(user -> {
             metodosCrud.delete(user);
             return true;

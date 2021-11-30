@@ -32,59 +32,61 @@ public class AccessoryService {
     }
 
     public Accessory save(Accessory accesorio) {
-        
+        if (accesorio.getReference() == null) {
+            return accesorio;
+        } else {
             Optional<Accessory> e = metodosCrud.getAccessory(accesorio.getReference());
-            if (e.isPresent()) {
+            if (!e.isPresent()) {
                 return metodosCrud.save(accesorio);
             } else {
                 return accesorio;
             }
-       
+        }
     }
 
+    /*
     public Optional<Accessory> getByReference(String referencia) {
-      
         return metodosCrud.getByReference(referencia);
     }
+     */
 
+    public Accessory updateAccessory(Accessory accesorio) {
+        Optional<Accessory> accessoryNew = metodosCrud.getAccessory(accesorio.getReference());
+        if (accessoryNew.isPresent()) {
 
-    public Accessory updateUser(Accessory accesorio) {
-            Optional<Accessory> accessoryNew = metodosCrud.getAccessory(accesorio.getReference());
-            if (accessoryNew.isPresent()) {
-                
-                accessoryNew.get().setBrand(accesorio.getBrand());
-                
-                accessoryNew.get().setCategory(accesorio.getCategory());
+            accessoryNew.get().setBrand(accesorio.getBrand());
 
-                accessoryNew.get().setMaterial(accesorio.getMaterial());
+            accessoryNew.get().setCategory(accesorio.getCategory());
 
-                accessoryNew.get().setGender(accesorio.getGender());
+            accessoryNew.get().setMaterial(accesorio.getMaterial());
 
-                accessoryNew.get().setSize(accesorio.getSize());
+            accessoryNew.get().setGender(accesorio.getGender());
 
-                accessoryNew.get().setDescription(accesorio.getDescription());
+            accessoryNew.get().setSize(accesorio.getSize());
 
-                accessoryNew.get().setAvailability(accesorio.getAvailability());
+            accessoryNew.get().setDescription(accesorio.getDescription());
 
-                accessoryNew.get().setPrice(accesorio.getPrice());
-                
-                accessoryNew.get().setQuantity(accesorio.getQuantity());
+            accessoryNew.get().setAvailability(accesorio.getAvailability());
 
-                accessoryNew.get().setPhotography(accesorio.getPhotography());
+            accessoryNew.get().setPrice(accesorio.getPrice());
 
-                metodosCrud.save(accessoryNew.get());
-                return accessoryNew.get();
-            } else {
-                return accesorio;
-            }   
+            accessoryNew.get().setQuantity(accesorio.getQuantity());
+
+            accessoryNew.get().setPhotography(accesorio.getPhotography());
+
+            metodosCrud.save(accessoryNew.get());
+            return accessoryNew.get();
+        } else {
+            return accesorio;
+        }
     }
-    
+
     public boolean deleteAccessory(String referencia) {
-        Boolean aBoolean = getByReference(referencia).map(accesorio -> {
+        Boolean aBoolean = getAccessory(referencia).map(accesorio -> {
             metodosCrud.delete(accesorio);
             return true;
         }).orElse(false);
         return aBoolean;
-    } 
-    
+    }
+
 }
