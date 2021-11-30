@@ -11,64 +11,55 @@ package co.edu.usa.ciclo4.modelo;
  * @author Grupo G9 Cilco-4
  */
 
-import java.util.Date;
-//import javax.persistence.GeneratedValue;
-//import javax.persistence.GenerationType;
-import javax.persistence.Id;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.NonNull;
 import lombok.Setter;
+import org.springframework.data.annotation.Id;
 import org.springframework.data.mongodb.core.mapping.Document;
-import org.springframework.data.mongodb.core.mapping.Field;
 
 //@Entity
 //@Table(name = "user",uniqueConstraints=@UniqueConstraint(columnNames={"email"}))
+@Document (collection = "users")
 @Data
 @AllArgsConstructor
 @NoArgsConstructor
-@Setter 
-@Getter
-
-@Document (collection = "users")
+@Setter @Getter
 public class User {
-    
     @Id
-    private String id;
+    private Integer id;
     
     @NonNull
-    @Field(name= "user_identification")
+    //@Field(name= "user_identification")
     private String identification;
     
     @NonNull
-    @Field(name= "user_name")
+    //@Field(name= "user_name")
     private String name;
     
     @NonNull
-    @Field(name= "user_address")
+    //@Field(name= "user_address")
     private String address;
     
     @NonNull
-    @Field(name= "user_cellPhone")
+    //@Field(name= "user_cellPhone")
     private String cellPhone;
 
     @NonNull
-    @Field(name= "user_email")
+    //@Field(name= "user_email")
     private String email;
     
     @NonNull
-    @Field(name= "user_password")
+    //@Field(name= "user_password")
     private String password;
     
     @NonNull
-    @Field(name= "user_zone")
+    //@Field(name= "user_zone")
     private String zone;
     
     @NonNull
-    @Field(name= "user_type")
+    //@Field(name= "user_type")
     private String type;
-   
-    
 }

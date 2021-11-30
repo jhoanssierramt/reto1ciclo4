@@ -19,7 +19,7 @@ import org.springframework.stereotype.Repository;
 @Repository
 public class AccessoryRepository {
 
-     @Autowired
+    @Autowired
     private AccessoryCrudRepository crud;
 
     public List<Accessory> getAll() {
@@ -33,12 +33,11 @@ public class AccessoryRepository {
     public Accessory save(Accessory accesorio) {
         return crud.save(accesorio);
     }
-
+    /*
     public Optional<Accessory> getByReference(String referencia) {
         return crud.getAccessoryByReference(referencia);
-        
     }
-
+    */
     public void delete(Accessory accesorio){
         crud.delete(accesorio);
     }

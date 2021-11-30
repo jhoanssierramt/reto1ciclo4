@@ -70,7 +70,7 @@ public class UserController {
      * @param email Consultado
      * @return Usuario en formato JSON
      */
-    @GetMapping("/{email}")
+    @GetMapping("emailexist/{email}")
     public String getUsersByEmail(@PathVariable("email") String email) {
         return servicio.getByEmail(email);
     }
@@ -95,7 +95,7 @@ public class UserController {
     
     @DeleteMapping("/{id}")
     @ResponseStatus(HttpStatus.NO_CONTENT)
-    public boolean delete(@PathVariable("id") String userId) {
+    public boolean delete(@PathVariable("id") Integer userId) {
         return servicio.deleteUser(userId);
     }
    

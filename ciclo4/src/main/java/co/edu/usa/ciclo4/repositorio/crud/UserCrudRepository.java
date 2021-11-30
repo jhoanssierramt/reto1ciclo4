@@ -7,11 +7,11 @@ package co.edu.usa.ciclo4.repositorio.crud;
 
 import co.edu.usa.ciclo4.modelo.User;
 import java.util.Optional;
-//import org.springframework.data.jpa.repository.Query;
-//import org.springframework.data.repository.CrudRepository;
 import org.springframework.data.mongodb.repository.MongoRepository;
 import org.springframework.data.mongodb.repository.Query;
 
+//import org.springframework.data.jpa.repository.Query;
+//import org.springframework.data.repository.CrudRepository;
 /**
  *
  * @author Grupo G9 Cilco-4
@@ -27,7 +27,7 @@ public interface UserCrudRepository extends CrudRepository<User, Integer>{
 }
 */
 
-public interface UserCrudRepository extends MongoRepository<User, String>{
+public interface UserCrudRepository extends MongoRepository<User, Integer>{
     @Query("{email:?0}")
     public String getUserByEmail(String email);
     
