@@ -71,7 +71,7 @@ function respuestaIngreso(json) {
     //alert("La informacion de inicio de sesion es CORRECTA");
     mostrarMensaje("La informacion de inicio de sesion es CORRECTA", "Inicio Sesion");
     setTimeout(() => {
-      window.location.href = "home.html?email=" + json.email + "&pswd=" + json.password + "&name=" + json.name;
+      window.location.href = "home.html?id=" + json.id;
     }, 2000);
 
   }
@@ -155,7 +155,7 @@ async function guardarCambios(event) {
 
 async function verificarCorreo(email) {
   try {
-    const url = BASE_URL + '/' + email;
+    const url = BASE_URL + '/emailexist/' + email;
     console.log("url: ", url);
     const fetchOptions = {
       method: "GET",
@@ -201,9 +201,16 @@ async function guardarRegistro() {
 
 function capturarDatosUsuario() {
   let datosCapturados = {
+    id: generarId(),
     name: document.getElementById("nameModal").value.trim(),
     email: document.getElementById("emailModal").value.trim(),
     password: document.getElementById("passwordModal").value.trim(),
+    identification: "-",
+    address: "-",
+    cellPhone: "-",
+    zone: "-",
+    type: "INVITADO"
+
   };
   return JSON.stringify(datosCapturados);
 }
@@ -213,4 +220,11 @@ function borrarCampos() {
   document.getElementById("passwordModal").value = "";
   document.getElementById("nameModal").value = "";
   document.getElementById("confirmModal").value = "";
+}
+
+function generarId(){
+  const id = Date.now() - parseInt(Date.now() / 1000000) * 1000000;
+  console.log("id fecha:",id);
+  return id;
+
 }

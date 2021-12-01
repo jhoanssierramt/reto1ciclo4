@@ -38,9 +38,9 @@ public class AccessoryController {
     private AccessoryService servicio;
 
     /**
-     * Método para obtener el listado de Usuarios existentes
+     * Método para obtener el listado de Accesorios existentes
      *
-     * @return listado de Usuarios formato JSON
+     * @return listado de Accesorios formato JSON
      */
     @GetMapping("/all")
     public List<Accessory> getAccessorys() {
@@ -48,11 +48,11 @@ public class AccessoryController {
     }
 
     /**
-     * Método para crear una Usuario
+     * Método para crear un Accesorio
      *
      * @param accesorio
      * @return Usuario
-     * @paramid identificador de Usuario
+     * @paramid identificador de Referencia
      *
      */
     @PostMapping("/new")
@@ -60,6 +60,15 @@ public class AccessoryController {
     public Accessory save(@RequestBody Accessory accesorio) {
         return servicio.save(accesorio);
     }
+    /**
+     * Método para Actualizar un Accesorio
+     *
+     * @param accesorio
+     * @return Accesorio
+     * @paramid identificador de Referencia
+     *
+     */
+    
     
     @PutMapping("/update")
     @ResponseStatus(HttpStatus.CREATED)
@@ -67,9 +76,23 @@ public class AccessoryController {
         return servicio.updateAccessory(accesorio);
     }
     
-    @DeleteMapping("/{id}")
+    /**
+     * Método para Eliminar un Accesorio
+     *
+     * @param accesorioRef
+     * @paramid identificador de Referencia
+     *
+     */
+    
+    @DeleteMapping("/{ref}")
     @ResponseStatus(HttpStatus.NO_CONTENT)
-    public boolean delete(@PathVariable("id") String accesorioRef) {
+    public boolean delete(@PathVariable("ref") String accesorioRef) {
         return servicio.deleteAccessory(accesorioRef);
+    }
+    
+    
+    @GetMapping("/{ref}")
+    public Accessory getAccessoryByRef(@PathVariable("ref") String referencia) {
+        return servicio.getAccessory(referencia).orElse(new Accessory());
     }
 }

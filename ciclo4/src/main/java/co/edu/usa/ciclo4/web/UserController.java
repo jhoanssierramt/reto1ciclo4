@@ -99,5 +99,9 @@ public class UserController {
         return servicio.deleteUser(userId);
     }
    
+    @GetMapping("/{id}")
+    public User getUserById(@PathVariable("id") Integer id) {
+        return servicio.getUser(id).orElse(new User());
+    }
 }
 
