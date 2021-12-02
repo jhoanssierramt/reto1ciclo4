@@ -67,7 +67,7 @@ async function ingreso(event) {
 
 function respuestaIngreso(json) {
 
-  if (json.name != "NO DEFINIDO") {
+  if (json.email != null) {
     //alert("La informacion de inicio de sesion es CORRECTA");
     mostrarMensaje("La informacion de inicio de sesion es CORRECTA", "Inicio Sesion");
     setTimeout(() => {
