@@ -2,7 +2,7 @@
 /**
  * URL de acceso a recurso
  */
-const BASE_URL = "/api/user";
+const BASE_URL = "http://localhost:8080/api/user";
 
 /**
  * Esperar a que los elementos HTML esten cargados:
@@ -14,17 +14,6 @@ const BASE_URL = "/api/user";
     const $id = urlParams.get('id');
     getUser($id);
 }
-
-
-$(function () {
-    $(window).on('scroll', function () {
-        if ( $(window).scrollTop() > 10 ) {
-            $('.navbar').addClass('active');
-        } else {
-            $('.navbar').removeClass('active');
-        }
-    });
-})
 
 async function getUser(id) {
     try {
