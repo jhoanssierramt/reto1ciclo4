@@ -1,4 +1,8 @@
 /**
+ * URL de acceso a recurso
+ */
+const BASE_URL = "http://localhost:8080/api/user";
+/**
  * Se utiliza para que añada el evento despues
  * de que los elementos HTML esten cargados
  * 
@@ -11,11 +15,6 @@ window.onload = function () {
   document.getElementById("botonRegistrar").addEventListener("click", registro);
 
 }
-
-/**
- * URL de acceso a recurso
- */
-const BASE_URL = "/api/user";
 
 /**
  * funcion que se ejecuta al detectar el evento click en el boton
@@ -69,9 +68,14 @@ function respuestaIngreso(json) {
 
   if (json.email != null) {
     //alert("La informacion de inicio de sesion es CORRECTA");
-    mostrarMensaje("La informacion de inicio de sesion es CORRECTA", "Inicio Sesion");
+    mostrarMensaje("Bienvenido " + json.name, "Inicio Sesion");
     setTimeout(() => {
-      window.location.href = "home.html?id=" + json.id;
+      if(json.type == "ADMIN") {
+        window.location.href = "admin.html?id=" + json.id;  
+      }
+      else {
+        window.location.href = "home.html?id=" + json.id;
+      }
     }, 2000);
 
   }
