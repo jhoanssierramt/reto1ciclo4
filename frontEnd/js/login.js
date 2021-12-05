@@ -143,7 +143,11 @@ async function guardarCambios(event) {
   let $password = document.getElementById("passwordModal").value;
   let $name = document.getElementById("nameModal").value;
   let $confirm = document.getElementById("confirmModal").value;
-  if ($name.length <= 0 || $email.length <= 0 || $password.length <= 0 || $confirm.length <= 0) {
+  let $ident = document.getElementById("identModal").value;
+  let $address = document.getElementById("addressModal").value;
+  let $cellphone = document.getElementById("cellphoneModal").value;
+  if ($name.length <= 0 || $email.length <= 0 || $password.length <= 0 || $confirm.length <= 0 
+|| $ident.length <=0 || $address.length <=0 || $cellphone.length <=0){
     mostrarMensaje("Todos los campos son obligatorios", "ADVERTENCIA");
   }
   else if ($password != $confirm) {
@@ -209,11 +213,11 @@ function capturarDatosUsuario() {
     name: document.getElementById("nameModal").value.trim(),
     email: document.getElementById("emailModal").value.trim(),
     password: document.getElementById("passwordModal").value.trim(),
-    identification: "-",
-    address: "-",
-    cellPhone: "-",
+    identification: document.getElementById("identModal").value.trim(),
+    address: document.getElementById("addressModal").value.trim(),
+    cellPhone: document.getElementById("cellphoneModal").value.trim(),
     zone: "-",
-    type: "INVITADO"
+    type: "ASESOR"
 
   };
   return JSON.stringify(datosCapturados);
