@@ -234,5 +234,4 @@ function generarId(){
   const id = Date.now() - parseInt(Date.now() / 1000000) * 1000000;
   console.log("id fecha:",id);
   return id;
-
 }

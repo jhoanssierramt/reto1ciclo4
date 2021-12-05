@@ -7,12 +7,8 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Admin</title>
     <!--Imports-->
-    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
-    <link rel="stylesheet" href="https://netdna.bootstrapcdn.com/bootstrap/4.0.0-beta/css/bootstrap.min.css">
-    <script type="text/javascript"
-        src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js"></script>
-    <script src="https://netdna.bootstrapcdn.com/bootstrap/4.0.0-beta/js/bootstrap.min.js"></script>
-    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css"
+        integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
     <script type="text/javascript" src="js/admin.js"></script>
     <link rel="stylesheet" type="text/css" href="/style/admin.css" />
 </head>
@@ -34,13 +30,12 @@
                     <div class="card">
                         <div class="card-body">
                             <div class="d-flex flex-column align-items-center text-center">
-                                <img src="/images/user_logo.png" alt="Admin"
-                                    class="rounded-circle" width="150">
+                                <img src="/images/user_logo.png" alt="Admin" class="rounded-circle" width="150">
                                 <div class="mt-3">
                                     <h4 id="name">name</h4>
                                     <h4><span id="type" class="badge badge-info">type</span></h4>
                                     <p id="email" class="text-muted font-size-sm">email</p>
-                                    <button class="btn btn-outline-primary">Editar Perfil</button>
+                                    <button id="editarPerfil" class="btn btn-outline-primary">Editar Perfil</button>
                                 </div>
                             </div>
                         </div>
@@ -48,10 +43,12 @@
                     <div class="card mt-3">
                         <ul class="list-group list-group-flush align-items-center">
                             <li class="list-group-item d-flex justify-content-between align-items-center flex-wrap">
-                                <button class="btn btn-light" onclick="mostrarTablaUsuarios()"><i class="fas fa-address-book icon"></i> Ver Usuarios</button>
+                                <button class="btn btn-light" onclick="mostrarTablaUsuarios()"><i
+                                        class="fas fa-address-book icon"></i> Ver Usuarios</button>
                             </li>
                             <li class="list-group-item d-flex justify-content-between align-items-center flex-wrap">
-                                <button class="btn btn-light" onclick="mostrarTablaAccesorios()"><i class="fab fa-shopify icon"></i> Ver Accesorios</button>
+                                <button class="btn btn-light" onclick="mostrarTablaAccesorios()"><i
+                                        class="fab fa-shopify icon"></i> Ver Accesorios</button>
                             </li>
                         </ul>
                     </div>
@@ -61,15 +58,19 @@
                     <div class="container-fluid py-2" id="tablaUsuarios">
                         <div class="d-flex flex-row flex-nowrap">
                             <div class="col-md-12">
-                                <div class="card" id="dtHorizontalExample" class="table table-striped table-bordered table-sm" cellspacing="0"
-                                width="100%">
+                                <div class="card" id="dtHorizontalExample"
+                                    class="table table-striped table-bordered table-sm" cellspacing="0" width="100%">
                                     <div class="card-body">
-                                        <h5 class="card-title text-uppercase mb-0">Gestión de Usuarios</h5>
+                                        <button type="button"
+                                            class="btn btn-success btn-circle btn-circle btn-lg float-right"
+                                            onclick='nuevoUsuario()'><i class="fa fa-plus"></i>
+                                        </button>
+                                        <h3 class="card-title">Gestión de Usuarios </h3>
                                     </div>
                                     <div class="table-responsive">
                                         <table class="table no-wrap user-table mb-0">
                                             <thead>
-                                                <tr>                                                    
+                                                <tr>
                                                     <th scope="col" class="border-0 text-uppercase font-medium">
                                                         Usuario</th>
                                                     <th scope="col" class="border-0 text-uppercase font-medium">
@@ -213,7 +214,7 @@
                                                                 class="fa fa-upload"></i> </button>
                                                     </td>
                                                 </tr>
-                                            -->                                                
+                                            -->
                                             </tbody>
                                         </table>
                                     </div>
@@ -231,81 +232,111 @@
     <!-- Modal para el formulario registrar-->
     <form>
         <div class="modal fade" id="modalRegistro" tabindex="-1" role="dialog">
-          <div class="modal-dialog" role="document">
-              <div class="modal-content">
-                  <div class="modal-header">
-                      <h3 class="modal-title" id="tituloModalRegistro">Registrar Usuario</h3>
-                  </div>
-                  <div class="modal-body">
-                      <div class="row">
-                          <div class="col-sm-12 col-lg-6">
-                              <label for="name" class="form-label">Nombre</label>
-                              <input type="text" class="form-control" id="nameModal" placeholder="Nombre" autocomplete="off">
-                          </div>
-                          <div class="col-sm-12 col-lg-6">
-                            <label for="name" class="form-label">Identificación</label>
-                            <input type="text" class="form-control" id="identModal" placeholder="Identificación" autocomplete="off">
-                          </div>
-                          <div class="col-sm-12 col-lg-6">
-                            <label for="name" class="form-label">Dirección</label>
-                            <input type="text" class="form-control" id="addressModal" placeholder="Dirección" autocomplete="off">
-                          </div>
-                          <div class="col-sm-12 col-lg-6">
-                            <label for="name" class="form-label">Teléfono</label>
-                            <input type="number" class="form-control" id="cellphoneModal" placeholder="Teléfono" autocomplete="off">
-                          </div>
-                          <div class="col-sm-12 col-lg-6">
-                            <label for="name" class="form-label">ZONA</label>
-                            <input type="text" class="form-control" id="zonaModal" placeholder="Zona" autocomplete="off">
-                          </div>
-                          <div class="col-sm-12 col-lg-6">
-                            <label for="name" class="form-label">Tipo</label>
-                            <select class="form-control category-select"
-                                id="tipoModal">
-                                <option>ASESOR</option>
-                                <option>COORD</option>
-                                <option>ADMIN</option>
-                            </select>
-                          </div>
-                          <div>
-                              <label id="idModal" hidden></label>
-                              <label id="passModal" hidden></label>
-                              <label id="emailModal" hidden></label>
-                          </div>
+            <div class="modal-dialog" role="document">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <h3 class="modal-title" id="tituloModalRegistro">Registrar Usuario</h3>
+                    </div>
+                    <div class="modal-body">
+                        <div class="row">
+                            <div class="col-sm-12 col-lg-6">
+                                <label for="name" class="form-label">Nombre</label>
+                                <input type="text" class="form-control" id="nameModal" placeholder="Nombre"
+                                    autocomplete="off">
+                            </div>
+                            <div class="col-sm-12 col-lg-6">
+                                <label for="name" class="form-label">Identificación</label>
+                                <input type="text" class="form-control" id="identModal" placeholder="Identificación"
+                                    autocomplete="off">
+                            </div>
+                            <div class="col-sm-12 col-lg-6">
+                                <label for="name" class="form-label">Dirección</label>
+                                <input type="text" class="form-control" id="addressModal" placeholder="Dirección"
+                                    autocomplete="off">
+                            </div>
+                            <div class="col-sm-12 col-lg-6">
+                                <label for="name" class="form-label">Teléfono</label>
+                                <input type="number" class="form-control" id="cellphoneModal" placeholder="Teléfono"
+                                    autocomplete="off">
+                            </div>
+                            <div class="col-sm-12 col-lg-6">
+                                <label for="name" class="form-label">Zona</label>
+                                <input type="text" class="form-control" id="zonaModal" placeholder="Zona"
+                                    autocomplete="off">
+                            </div>
+                            <div class="col-sm-12 col-lg-6">
+                                <label for="name" class="form-label">Tipo</label>
+                                <select class="form-control category-select" id="tipoModal">
+                                    <option>ASESOR</option>
+                                    <option>COORD</option>
+                                    <option>ADMIN</option>
+                                </select>
+                            </div>
+                            <div class="col-sm-12 col-lg-6">
+                                <label for="name" class="form-label">Email</label>
+                                <input type="text" class="form-control" id="emailModal" placeholder="Email"
+                                    autocomplete="off">
+                            </div>
+                            <div class="col-sm-12 col-lg-6">
+                                <label for="name" class="form-label">Contraseña</label>
+                                <input type="password" class="form-control" id="passwordModal" placeholder="Contraseña"
+                                    autocomplete="off">
+                            </div>
+                            <div class="col-sm-12 col-lg-6" id="confPasswordDiv">
+                                <label for="name" class="form-label">Confirmar Contraseña</label>
+                                <input type="password" class="form-control" placeholder="Contraseña"
+                                    id="confPasswordModal" autocomplete="off">
+                            </div>
+                            <div>
+                                <label id="idModal" hidden></label>
+                                <label id="hEmailModal" hidden></label>
+                            </div>
 
-                      </div>
-                  </div>
-                  <div class="modal-footer">
-                      <button id="editarDatos" type="submit" class="btn btn-primary">Guardar</button>
-                      <button id="cancelarEditar" type="button" class="btn btn-secondary" onclick="cerrarModal()">Cancelar</button>
-                  </div>
-              </div>
-          </div>
-      </div>
-      </form>
-      <!-- fin del modal de formulario -->
-      
-      <!-- modal de mensaje de confirmacion -->
-      <div class="modal fade" id="modalMensaje" tabindex="-1" role="dialog">
-          <div class="modal-dialog" role="document">
-              <div class="modal-content">
-                  <div class="modal-header">
-                      <h5 class="modal-title" id="tituloModalMensaje">TituloMensaje</h5>
-                  </div>
-                  <div class="modal-body">
-                      <p id="mensaje">
-                          
-                      </p>
-                  </div>
-                  <div class="modal-footer">
-                      <button id="botonEliminar" type="button" class="btn btn-danger">Eliminar</button>
-                      <button id="botonCancelar" type="button" class="btn btn-secondary" onclick="cerrarModalMensaje()">Cancelar</button>
-                  </div>
-              </div>
-          </div>
-      </div>
-      <!-- fin del modal de mensaje de confirmacion -->
-    
+                        </div>
+                    </div>
+                    <div class="modal-footer">
+                        <button id="editarDatos" type="submit" class="btn btn-primary">Guardar</button>
+                        <button id="cancelarEditar" type="button" class="btn btn-secondary"
+                            onclick="cerrarModal()">Cancelar</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </form>
+    <!-- fin del modal de formulario -->
+
+    <!-- modal de mensaje de confirmacion -->
+    <div class="modal fade" id="modalMensaje" tabindex="-1" role="dialog">
+        <div class="modal-dialog" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="tituloModalMensaje">TituloMensaje</h5>
+                </div>
+                <div class="modal-body">
+                    <p id="mensaje">
+
+                    </p>
+                </div>
+                <div class="modal-footer">
+                    <button id="botonEliminar" type="button" class="btn btn-danger">Eliminar</button>
+                    <button id="botonCancelar" type="button" class="btn btn-secondary"
+                        onclick="cerrarModalMensaje()">Ok!</button>
+                </div>
+            </div>
+        </div>
+    </div>
+    <!-- fin del modal de mensaje de confirmacion -->
+    <!--Imports-->
+    <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js"
+        integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo"
+        crossorigin="anonymous"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js"
+        integrity="sha384-UO2eT0CpHqdSJQ6hJty5KVphtPhzWj9WO1clHTMGa3JDZwrnQq4sF86dIHNDz0W1"
+        crossorigin="anonymous"></script>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js"
+        integrity="sha384-JjSmVgyd0p3pXB1rRibZUAYoIIy6OrQ6VrjIEaFf/nJGzIxFDsf4x0xIM+B07jRM"
+        crossorigin="anonymous"></script>
+    <script src="https://use.fontawesome.com/releases/v5.15.4/js/all.js" data-auto-replace-svg="nest"></script>
 </body>
 
 </html>

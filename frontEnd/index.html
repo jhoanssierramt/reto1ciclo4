@@ -4,131 +4,150 @@ Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to c
 Click nbfs://nbhost/SystemFileSystem/Templates/Other/html.html to edit this template
 -->
 <html>
-    <head>
-        <title>Calzado Sailor Moon LTDA</title>
-        <meta charset="UTF-8">
-        <meta name="viewport" content="width=device-width, initial-scale=1.0">  
-        <base href="/"/> 
-        <link rel="stylesheet" type="text/css" href="/style/login.css"/>
-        <script type="text/javascript" src="js/login.js"></script>
-    </head>
-    <body>
-      <div id="snippetContent">
-        <div class="container">
-            <div class="row justify-content-center">
-              <div class="col-md-8">
-                <div class="card-group mb-0">
-                  <!--tarjeta uno loggin-->
-                  <div class="card p-4">
-                    <div class="card-body">
-                      <h1 class="prueba">Iniciar Sesión</h1>
-                      <p class="text-muted">Inicia sesión en tu cuenta</p>
-                      <form id="formulario">
-                        <div class="input-group mb-3">
-                          <span class="input-group-addon"><i class="fa fa-user"></i></span>
-                          <input type="email" class="form-control" placeholder="E-mail" name="email" id="email" autocomplete="off">
-                        </div>
-                        <div class="input-group mb-4">
-                          <span class="input-group-addon"><i class="fa fa-lock"></i></span>
-                          <input type="password" class="form-control" placeholder="Password" name="password" id="password" autocomplete="off">
-                        </div>
-                        <div class="row">
-                          <div class="col-6">
-                            <button type="submit" id="botonIngresar" class="btn btn-primary px-4">Ingresar</button>
-                          </div>
-                        </div>
-                      </form>
+
+<head>
+  <title>Calzado Sailor Moon LTDA</title>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <base href="/" />
+  <!--Imports-->
+  <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css"
+    integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
+  <link rel="stylesheet" type="text/css" href="/style/login.css" />
+  <script type="text/javascript" src="js/login.js"></script>
+</head>
+
+<body>
+  <div id="snippetContent">
+    <div class="container">
+      <div class="row justify-content-center">
+        <div class="col-md-8">
+          <div class="card-group mb-0">
+            <!--tarjeta uno loggin-->
+            <div class="card p-4">
+              <div class="card-body">
+                <h1 class="prueba">Iniciar Sesión</h1>
+                <p class="text-muted">Inicia sesión en tu cuenta</p>
+                <form id="formulario">
+                  <div class="input-group mb-3">
+                    <span class="input-group-addon"><i class="fa fa-user"></i></span>
+                    <input type="email" class="form-control" placeholder="E-mail" name="email" id="email"
+                      autocomplete="off">
+                  </div>
+                  <div class="input-group mb-4">
+                    <span class="input-group-addon"><i class="fa fa-lock"></i></span>
+                    <input type="password" class="form-control" placeholder="Password" name="password" id="password"
+                      autocomplete="off">
+                  </div>
+                  <div class="row">
+                    <div class="col-6">
+                      <button type="submit" id="botonIngresar" class="btn btn-primary px-4">Ingresar</button>
                     </div>
                   </div>
-                  <div class="card text-white bg-primary py-5 d-md-down-none" style="width:44%">
-                    <!--tarjeta dos registro-->
-                    <div class="card-body text-center">
-                      <div>
-                        <h2>Registrarse</h2>
-                        <p class="registro">No tienes cuenta? Para acceder a los servicios de Calzado Sailor Moon LTDA, por favor crea una cuenta aqui.</p>
-                        <button type="button" id="botonRegistrar" class="btn btn-primary active mt-3">Registrate ahora!</button>
-                      </div>
-                    </div>
-                  </div>
+                </form>
+              </div>
+            </div>
+            <div class="card text-white bg-primary py-5 d-md-down-none" style="width:44%">
+              <!--tarjeta dos registro-->
+              <div class="card-body text-center">
+                <div>
+                  <h2>Registrarse</h2>
+                  <p class="registro">No tienes cuenta? Para acceder a los servicios de Calzado Sailor Moon LTDA, por
+                    favor crea una cuenta aqui.</p>
+                  <button type="button" id="botonRegistrar" class="btn btn-primary active mt-3">Registrate
+                    ahora!</button>
                 </div>
               </div>
             </div>
           </div>
-        <!-- Modal para el formulario registrar-->
-        <form>
-        <div class="modal fade" id="modalRegistro" tabindex="-1" role="dialog">
-          <div class="modal-dialog" role="document">
-              <div class="modal-content">
-                  <div class="modal-header">
-                      <h3 class="modal-title" id="tituloModalRegistro">Registrar Usuario</h3>
-                  </div>
-                  <div class="modal-body">
-                      <div class="row">
-                          <div class="col-sm-12 col-lg-6">
-                              <label for="name" class="form-label">Nombre</label>
-                              <input type="text" class="form-control" id="nameModal" placeholder="Nombre" autocomplete="off">
-                          </div>
-                          <div class="col-sm-12 col-lg-6">
-                            <label for="name" class="form-label">Identificación</label>
-                            <input type="text" class="form-control" id="identModal" placeholder="Identificación" autocomplete="off">
-                          </div>
-                          <div class="col-sm-12 col-lg-6">
-                            <label for="name" class="form-label">Dirección</label>
-                            <input type="text" class="form-control" id="addressModal" placeholder="Dirección" autocomplete="off">
-                          </div>
-                          <div class="col-sm-12 col-lg-6">
-                            <label for="name" class="form-label">Teléfono</label>
-                            <input type="number" class="form-control" id="cellphoneModal" placeholder="Teléfono" autocomplete="off">
-                          </div>
-                          <div class="col-sm-12 col-lg-6">
-                              <label for="email" class="form-label">Correo</label>
-                              <input type="email" class="form-control" id="emailModal" placeholder="Correo" autocomplete="off">
-                          </div>
-                          <div class="col-sm-12 col-lg-6">
-                              <label for="password" class="form-label">Contraseña</label>
-                              <input type="password" class="form-control" id="passwordModal" placeholder="Contraseña" autocomplete="off">
-                          </div>
-                          <div class="col-sm-12 col-lg-6">
-                            <label for="password" class="form-label">Confirmar Contraseña</label>
-                            <input type="password" class="form-control" id="confirmModal" placeholder="Confirmar Contraseña" autocomplete="off">
-                          </div>
+        </div>
+      </div>
+    </div>
+    <!-- Modal para el formulario registrar-->
+    <form>
+      <div class="modal fade" id="modalRegistro" tabindex="-1" role="dialog">
+        <div class="modal-dialog" role="document">
+          <div class="modal-content">
+            <div class="modal-header">
+              <h3 class="modal-title" id="tituloModalRegistro">Registrar Usuario</h3>
+            </div>
+            <div class="modal-body">
+              <div class="row">
+                <div class="col-sm-12 col-lg-6">
+                  <label for="name" class="form-label">Nombre</label>
+                  <input type="text" class="form-control" id="nameModal" placeholder="Nombre" autocomplete="off">
+                </div>
+                <div class="col-sm-12 col-lg-6">
+                  <label for="name" class="form-label">Identificación</label>
+                  <input type="text" class="form-control" id="identModal" placeholder="Identificación"
+                    autocomplete="off">
+                </div>
+                <div class="col-sm-12 col-lg-6">
+                  <label for="name" class="form-label">Dirección</label>
+                  <input type="text" class="form-control" id="addressModal" placeholder="Dirección" autocomplete="off">
+                </div>
+                <div class="col-sm-12 col-lg-6">
+                  <label for="name" class="form-label">Teléfono</label>
+                  <input type="number" class="form-control" id="cellphoneModal" placeholder="Teléfono"
+                    autocomplete="off">
+                </div>
+                <div class="col-sm-12 col-lg-6">
+                  <label for="email" class="form-label">Correo</label>
+                  <input type="email" class="form-control" id="emailModal" placeholder="Correo" autocomplete="off">
+                </div>
+                <div class="col-sm-12 col-lg-6">
+                  <label for="password" class="form-label">Contraseña</label>
+                  <input type="password" class="form-control" id="passwordModal" placeholder="Contraseña"
+                    autocomplete="off">
+                </div>
+                <div class="col-sm-12 col-lg-6">
+                  <label for="password" class="form-label">Confirmar Contraseña</label>
+                  <input type="password" class="form-control" id="confirmModal" placeholder="Confirmar Contraseña"
+                    autocomplete="off">
+                </div>
 
-                      </div>
-                  </div>
-                  <div class="modal-footer">
-                      <button id="enviarDatos" type="submit" class="btn btn-primary">Guardar</button>
-                      <button type="button" class="btn btn-secondary" onclick="cerrarModal()">Cancelar</button>
-                  </div>
               </div>
+            </div>
+            <div class="modal-footer">
+              <button id="enviarDatos" type="submit" class="btn btn-primary">Guardar</button>
+              <button type="button" class="btn btn-secondary" onclick="cerrarModal()">Cancelar</button>
+            </div>
           </div>
+        </div>
       </div>
-      </form>
-      <!-- fin del modal de formulario -->
-      
-      <!-- modal de mensaje de confirmacion -->
-      <div class="modal fade" id="modalMensaje" tabindex="-1" role="dialog">
-          <div class="modal-dialog" role="document">
-              <div class="modal-content">
-                  <div class="modal-header">
-                      <h5 class="modal-title" id="tituloModalMensaje">TituloMensaje</h5>
-                  </div>
-                  <div class="modal-body">
-                      <p id="mensaje">
-                          
-                      </p>
-                  </div>
-                  <div class="modal-footer">
-                      <button type="button" class="btn btn-primary" onclick="cerrarModalMensaje()">OK</button>
-                  </div>
-              </div>
+    </form>
+    <!-- fin del modal de formulario -->
+
+    <!-- modal de mensaje de confirmacion -->
+    <div class="modal fade" id="modalMensaje" tabindex="-1" role="dialog">
+      <div class="modal-dialog" role="document">
+        <div class="modal-content">
+          <div class="modal-header">
+            <h5 class="modal-title" id="tituloModalMensaje">TituloMensaje</h5>
           </div>
+          <div class="modal-body">
+            <p id="mensaje">
+
+            </p>
+          </div>
+          <div class="modal-footer">
+            <button type="button" class="btn btn-primary" onclick="cerrarModalMensaje()">OK</button>
+          </div>
+        </div>
       </div>
-      <!-- fin del modal de mensaje de confirmacion -->
-      </div>
-      <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
-      <link rel="stylesheet" href="https://netdna.bootstrapcdn.com/bootstrap/4.0.0-beta/css/bootstrap.min.css">
-      <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js"></script>
-      <script src="https://netdna.bootstrapcdn.com/bootstrap/4.0.0-beta/js/bootstrap.min.js"></script>
-      <link href="https://maxcdn.bootstrapcdn.com/font-awesome/4.3.0/css/font-awesome.min.css" rel="stylesheet">
-    </body>
+    </div>
+    <!-- fin del modal de mensaje de confirmacion -->
+  </div>
+  <!--Imports-->
+  <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js"
+    integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo"
+    crossorigin="anonymous"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js"
+    integrity="sha384-UO2eT0CpHqdSJQ6hJty5KVphtPhzWj9WO1clHTMGa3JDZwrnQq4sF86dIHNDz0W1"
+    crossorigin="anonymous"></script>
+  <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js"
+    integrity="sha384-JjSmVgyd0p3pXB1rRibZUAYoIIy6OrQ6VrjIEaFf/nJGzIxFDsf4x0xIM+B07jRM"
+    crossorigin="anonymous"></script>
+</body>
+
 </html>
