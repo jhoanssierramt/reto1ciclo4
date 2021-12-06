@@ -86,135 +86,59 @@
                                                 </tr>
                                             </thead>
                                             <tbody id="cuerpoTabla">
+                                                <!-- Insertar Tabla desde Js -->
+                                            </tbody>
+                                        </table>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <!--Fin Snippet-->
 
-                                                <!--
-                                                <tr>                                                    
-                                                    <td>
-                                                        <h5 class="font-medium mb-0">Daniel Kristeen</h5>
-                                                        <span class="text-muted">Texas, Unitedd states</span>
-                                                    </td>
-                                                    <td>
-                                                        <span class="text-muted">Visual Designer</span><br>
-                                                        <span class="text-muted">Past : teacher</span>
-                                                    </td>
-                                                    <td>
-                                                        <span class="text-muted">daniel@website.com</span><br>
-                                                        <span class="text-muted">999 - 444 - 555</span>
-                                                    </td>
-                                                    <td>
-                                                        <span class="text-muted">15 Mar 1988</span><br>
-                                                        <span class="text-muted">10: 55 AM</span>
-                                                    </td>
-                                                    <td>
-                                                        <select class="form-control category-select"
-                                                            id="exampleFormControlSelect1">
-                                                            <option>Modulator</option>
-                                                            <option>Admin</option>
-                                                            <option>User</option>
-                                                            <option>Subscriber</option>
-                                                        </select>
-                                                    </td>
-                                                    <td>
-                                                        <button type="button"
-                                                            class="btn btn-outline-info btn-circle btn-lg btn-circle"><i
-                                                                class="fa fa-key"></i> </button>
-                                                        <button type="button"
-                                                            class="btn btn-outline-info btn-circle btn-lg btn-circle ml-2"><i
-                                                                class="fa fa-trash"></i> </button>
-                                                        <button type="button"
-                                                            class="btn btn-outline-info btn-circle btn-lg btn-circle ml-2"><i
-                                                                class="fa fa-edit"></i> </button>
-                                                        <button type="button"
-                                                            class="btn btn-outline-info btn-circle btn-lg btn-circle ml-2"><i
-                                                                class="fa fa-upload"></i> </button>
-                                                    </td>
-                                                </tr>
+                    <!--Tabla Accesorios (Snippet)-->
+                    <div class="container-fluid py-2" id="tablaAccesorios">
+                        <div class="d-flex flex-row flex-nowrap">
+                            <div class="col-md-12">
+                                <div class="card" id="dtHorizontalExample"
+                                    class="table table-striped table-bordered table-sm" cellspacing="0" width="100%">
+                                    <div class="card-body">
+                                        <button type="button"
+                                            class="btn btn-primary btn-circle btn-circle btn-lg float-right"
+                                            onclick='nuevoAccesorio()'><i class="fa fa-plus"></i>
+                                        </button>
+                                        <h3 class="card-title">Inventario Accesorios</h3>
+                                    </div>
+                                    <div class="table-responsive">
+                                        <table class="table no-wrap user-table mb-0">
+                                            <thead>
                                                 <tr>
-                                                    
-                                                    
-                                                    <td>
-                                                        <h5 class="font-medium mb-0" id="">Nombre</h5>
-                                                        <span class="text-muted">Identificación</span>
-                                                    </td>
-                                                    <td>
-                                                        <span class="text-muted">Visual Designer</span><br>
-                                                        <span class="text-muted">Past : teacher</span>
-                                                    </td>
-                                                    <td>
-                                                        <span class="text-muted">daniel@website.com</span><br>
-                                                        <span class="text-muted">999 - 444 - 555</span>
-                                                    </td>
-                                                    <td>
-                                                        <span class="text-muted">15 Mar 1855</span><br>
-                                                        <span class="text-muted">10: 00 AM</span>
-                                                    </td>
-                                                    <td>
-                                                        <select class="form-control category-select"
-                                                            id="exampleFormControlSelect1">
-                                                            <option>Modulator</option>
-                                                            <option>Admin</option>
-                                                            <option>User</option>
-                                                            <option>Subscriber</option>
-                                                        </select>
-                                                    </td>
-                                                    <td>
-                                                        <button type="button"
-                                                            class="btn btn-outline-info btn-circle btn-lg btn-circle"><i
-                                                                class="fa fa-key"></i> </button>
-                                                        <button type="button"
-                                                            class="btn btn-outline-info btn-circle btn-lg btn-circle ml-2"><i
-                                                                class="fa fa-trash"></i> </button>
-                                                        <button type="button"
-                                                            class="btn btn-outline-info btn-circle btn-lg btn-circle ml-2"><i
-                                                                class="fa fa-edit"></i> </button>
-                                                        <button type="button"
-                                                            class="btn btn-outline-info btn-circle btn-lg btn-circle ml-2"><i
-                                                                class="fa fa-upload"></i> </button>
-                                                    </td>
+                                                    <th scope="col" class="border-0 text-uppercase font-medium">
+                                                        Imagen</th>
+                                                    <th scope="col" class="border-0 text-uppercase font-medium">
+                                                        Referencia</th>
+                                                    <th scope="col" class="border-0 text-uppercase font-medium">
+                                                        Marca</th>
+                                                    <th scope="col" class="border-0 text-uppercase font-medium">
+                                                        Categoría</th>
+                                                    <th scope="col" class="border-0 text-uppercase font-medium">
+                                                        Material</th>
+                                                    <th scope="col" class="border-0 text-uppercase font-medium">
+                                                        Género</th>
+                                                    <th scope="col" class="border-0 text-uppercase font-medium">
+                                                        Talla</th>
+                                                    <th scope="col" class="border-0 text-uppercase font-medium">
+                                                        Descripción</th>
+                                                    <th scope="col" class="border-0 text-uppercase font-medium">
+                                                        Disponible?</th>
+                                                    <th scope="col" class="border-0 text-uppercase font-medium">
+                                                        Precio</th>
+                                                    <th scope="col" class="border-0 text-uppercase font-medium">
+                                                        Cantidad</th>
                                                 </tr>
-                                                <tr>
-                                                    <td class="pl-4">3</td>
-                                                    <td>
-                                                        <h5 class="font-medium mb-0">Olivia Johnson</h5>
-                                                        <span class="text-muted">Texas, Unitedd states</span>
-                                                    </td>
-                                                    <td>
-                                                        <span class="text-muted">Visual Designer</span><br>
-                                                        <span class="text-muted">Past : teacher</span>
-                                                    </td>
-                                                    <td>
-                                                        <span class="text-muted">daniel@website.com</span><br>
-                                                        <span class="text-muted">999 - 444 - 555</span>
-                                                    </td>
-                                                    <td>
-                                                        <span class="text-muted">17 Aug 1988</span><br>
-                                                        <span class="text-muted">12: 55 AM</span>
-                                                    </td>
-                                                    <td>
-                                                        <select class="form-control category-select"
-                                                            id="exampleFormControlSelect1">
-                                                            <option>Modulator</option>
-                                                            <option>Admin</option>
-                                                            <option>User</option>
-                                                            <option>Subscriber</option>
-                                                        </select>
-                                                    </td>
-                                                    <td>
-                                                        <button type="button"
-                                                            class="btn btn-outline-info btn-circle btn-lg btn-circle"><i
-                                                                class="fa fa-key"></i> </button>
-                                                        <button type="button"
-                                                            class="btn btn-outline-info btn-circle btn-lg btn-circle ml-2"><i
-                                                                class="fa fa-trash"></i> </button>
-                                                        <button type="button"
-                                                            class="btn btn-outline-info btn-circle btn-lg btn-circle ml-2"><i
-                                                                class="fa fa-edit"></i> </button>
-                                                        <button type="button"
-                                                            class="btn btn-outline-info btn-circle btn-lg btn-circle ml-2"><i
-                                                                class="fa fa-upload"></i> </button>
-                                                    </td>
-                                                </tr>
-                                            -->
+                                            </thead>
+                                            <tbody id="bodyTableAccessory">
+                                                <!-- Insertar Tabla desde Js -->
                                             </tbody>
                                         </table>
                                     </div>
