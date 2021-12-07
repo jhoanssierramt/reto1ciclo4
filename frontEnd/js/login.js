@@ -139,13 +139,13 @@ function mostrarRegistro() {
 async function guardarCambios(event) {
   event.preventDefault();
   var emailPattern = /^[a-zA-Z0-9._-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,4}$/;
-  let $email = document.getElementById("emailModal").value;
-  let $password = document.getElementById("passwordModal").value;
-  let $name = document.getElementById("nameModal").value;
-  let $confirm = document.getElementById("confirmModal").value;
-  let $ident = document.getElementById("identModal").value;
-  let $address = document.getElementById("addressModal").value;
-  let $cellphone = document.getElementById("cellphoneModal").value;
+  let $email = document.getElementById("emailModal").value.trim();
+  let $password = document.getElementById("passwordModal").value.trim();
+  let $name = document.getElementById("nameModal").value.trim();
+  let $confirm = document.getElementById("confirmModal").value.trim();
+  let $ident = document.getElementById("identModal").value.trim();
+  let $address = document.getElementById("addressModal").value.trim();
+  let $cellphone = document.getElementById("cellphoneModal").value.trim();
   if ($name.length <= 0 || $email.length <= 0 || $password.length <= 0 || $confirm.length <= 0 
 || $ident.length <=0 || $address.length <=0 || $cellphone.length <=0){
     mostrarMensaje("Todos los campos son obligatorios", "ADVERTENCIA");
@@ -210,12 +210,12 @@ async function guardarRegistro() {
 function capturarDatosUsuario() {
   let datosCapturados = {
     id: generarId(),
-    name: document.getElementById("nameModal").value.trim(),
-    email: document.getElementById("emailModal").value.trim(),
-    password: document.getElementById("passwordModal").value.trim(),
-    identification: document.getElementById("identModal").value.trim(),
-    address: document.getElementById("addressModal").value.trim(),
-    cellPhone: document.getElementById("cellphoneModal").value.trim(),
+    name: document.getElementById("nameModal").value,
+    email: document.getElementById("emailModal").value,
+    password: document.getElementById("passwordModal").value,
+    identification: document.getElementById("identModal").value,
+    address: document.getElementById("addressModal").value,
+    cellPhone: document.getElementById("cellphoneModal").value,
     zone: "-",
     type: "ASESOR"
 

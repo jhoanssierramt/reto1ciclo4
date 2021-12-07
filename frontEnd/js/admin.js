@@ -18,7 +18,7 @@ window.onload = function () {
     getUser($id);
 
     document.getElementById("tablaUsuarios").hidden = true;
-    document.getElementById("tablaAccesorios").hidden = true;
+    document.getElementById("tablaProductos").hidden = true;
 }
 
 async function getUser(id) {
@@ -110,7 +110,7 @@ async function cargarTabla() {
 
 function mostrarTablaUsuarios() {
     document.getElementById("tablaUsuarios").hidden = false;
-    document.getElementById("tablaAccesorios").hidden = true;
+    document.getElementById("tablaProductos").hidden = true;
     cargarTabla();
 }
 
@@ -130,6 +130,10 @@ function nuevoUsuario() {
 
     $("#tipoModal").val("ASESOR");
 
+    document.getElementById('passwordModal').disabled = false;
+    document.getElementById('emailModal').disabled = false;
+    document.getElementById("zonaModal").disabled = false;
+    document.getElementById("tipoModal").disabled = false;
     document.getElementById("editarDatos").addEventListener("click", crearNuevoUsuario);
     $('#modalRegistro').modal('show');
 }
@@ -137,14 +141,14 @@ function nuevoUsuario() {
 async function crearNuevoUsuario(event) {
     event.preventDefault();
     var emailPattern = /^[a-zA-Z0-9._-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,4}$/;
-    let $email = document.getElementById("emailModal").value;
-    let $password = document.getElementById("passwordModal").value;
-    let $name = document.getElementById("nameModal").value;
-    let $confirm = document.getElementById("confPasswordModal").value;
-    let $ident = document.getElementById("identModal").value;
-    let $address = document.getElementById("addressModal").value;
-    let $cellphone = document.getElementById("cellphoneModal").value;
-    let correoRepetido = await verificarCorreo($email) && ($email != document.getElementById("hEmailModal").value);
+    let $email = document.getElementById("emailModal").value.trim();
+    let $password = document.getElementById("passwordModal").value.trim();
+    let $name = document.getElementById("nameModal").value.trim();
+    let $confirm = document.getElementById("confPasswordModal").value.trim();
+    let $ident = document.getElementById("identModal").value.trim();
+    let $address = document.getElementById("addressModal").value.trim();
+    let $cellphone = document.getElementById("cellphoneModal").value.trim();
+    let correoRepetido = await verificarCorreo($email);
     if ($name.length <= 0 || $email.length <= 0 || $password.length <= 0 || $confirm.length <= 0
         || $ident.length <= 0 || $address.length <= 0 || $cellphone.length <= 0) {
         mostrarMensaje("Todos los campos son obligatorios", "ADVERTENCIA");
@@ -185,13 +189,11 @@ function editar(usuario, isPerfil = false) {
     console.log("usuario a Editar: ", usuario.name);
     if (!isPerfil) {
         $("#tituloModalRegistro").html('Actualizar Usuario');
-        //$("#confPasswordModal").val(usuario.password);
+        $("#confPasswordModal").val(usuario.password);
     } else {
         $("#tituloModalRegistro").html('Editar Perfil');
-        //$("#confPasswordModal").val("");
+        $("#confPasswordModal").val("");
     }
-    $("#confPasswordModal").val(usuario.password);
-
     $("#idModal").val(usuario.id);
     $("#passwordModal").val(usuario.password);
     $("#emailModal").val(usuario.email);
@@ -203,12 +205,13 @@ function editar(usuario, isPerfil = false) {
     $("#zonaModal").val(usuario.zone);
     $("#tipoModal").val(usuario.type);
 
-    // document.getElementById('passwordModal').disabled = !isPerfil;
-    // document.getElementById('emailModal').disabled = !isPerfil;
-    // document.getElementById("zonaModal").disabled = isPerfil;
-    // document.getElementById("tipoModal").disabled = isPerfil;
-    // document.getElementById("confPasswordDiv").disabled = !isPerfil;
+    document.getElementById('passwordModal').disabled = false;
+    document.getElementById('emailModal').disabled = false;
+    document.getElementById("zonaModal").disabled = isPerfil;
+    document.getElementById("tipoModal").disabled = isPerfil;
+    document.getElementById("confPasswordDiv").disabled = false;
 
+    /*
     if(usuario.type == "ADMIN")
         document.getElementById("tipoModal").disabled = true;
     else
@@ -216,7 +219,8 @@ function editar(usuario, isPerfil = false) {
 
 
     document.getElementById("emailModal").disabled = true;
-
+    */
+   
     $('#modalRegistro').modal('show');
 }
 
@@ -227,13 +231,13 @@ var cerrarModal = function () {
 async function actualizarCambios(event) {
     event.preventDefault();
     var emailPattern = /^[a-zA-Z0-9._-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,4}$/;
-    let $email = document.getElementById("emailModal").value;
-    let $password = document.getElementById("passwordModal").value;
-    let $name = document.getElementById("nameModal").value;
-    let $confirm = document.getElementById("confPasswordModal").value;
-    let $ident = document.getElementById("identModal").value;
-    let $address = document.getElementById("addressModal").value;
-    let $cellphone = document.getElementById("cellphoneModal").value;
+    let $email = document.getElementById("emailModal").value.trim();
+    let $password = document.getElementById("passwordModal").value.trim();
+    let $name = document.getElementById("nameModal").value.trim();
+    let $confirm = document.getElementById("confPasswordModal").value.trim();
+    let $ident = document.getElementById("identModal").value.trim();
+    let $address = document.getElementById("addressModal").value.trim();
+    let $cellphone = document.getElementById("cellphoneModal").value.trim();
     let correoRepetido = await verificarCorreo($email) && ($email != document.getElementById("hEmailModal").value);
     if ($name.length <= 0 || $email.length <= 0 || $password.length <= 0 || $confirm.length <= 0
         || $ident.length <= 0 || $address.length <= 0 || $cellphone.length <= 0) {
@@ -303,14 +307,14 @@ async function verificarCorreo(email) {
 function capturarDatosUsuario() {
     let datosCapturados = {
         id: +document.getElementById("idModal").value,
-        name: document.getElementById("nameModal").value.trim(),
-        email: document.getElementById("emailModal").value.trim(),
-        password: document.getElementById("passwordModal").value.trim(),
-        identification: document.getElementById("identModal").value.trim(),
-        address: document.getElementById("addressModal").value.trim(),
-        cellPhone: document.getElementById("cellphoneModal").value.trim(),
-        zone: document.getElementById("zonaModal").value.trim(),
-        type: document.getElementById("tipoModal").value.trim()
+        name: document.getElementById("nameModal").value,
+        email: document.getElementById("emailModal").value,
+        password: document.getElementById("passwordModal").value,
+        identification: document.getElementById("identModal").value,
+        address: document.getElementById("addressModal").value,
+        cellPhone: document.getElementById("cellphoneModal").value,
+        zone: document.getElementById("zonaModal").value,
+        type: document.getElementById("tipoModal").value
     };
     return JSON.stringify(datosCapturados);
 }
@@ -358,55 +362,4 @@ function generarId(){
     const id = Date.now() - parseInt(Date.now() / 1000000) * 1000000;
     console.log("id fecha:",id);
     return id;
-}
-
-function mostrarTablaAccesorios(){
-    document.getElementById("tablaUsuarios").hidden = true;
-    document.getElementById("tablaAccesorios").hidden = false;
-    //cargarTablaAccesorios();
-}
-
-async function cargarTablaAccesorios() {
-    let items = await getAllUsers();
-    let tablaUsuarios = "";
-    for (let i of items) {
-        tablaUsuarios += `<tr>
-                        <td>
-                        <span>`+ i.name + `</span><br>
-                            <span class="text-muted"> C.C.`+ i.identification + `</span>
-                        </td>
-                        <td>
-                            <span class="text-muted">`+ i.email + `</span>
-                        </td>
-                        <td>
-                            <span class="text-muted">`+ i.cellPhone + `</span>
-                        </td>
-                        <td>
-                            <span class="text-muted">`+ i.address + `</span>
-                        </td>
-                        <td>
-                            <span class="text-muted">`+ i.zone + `</span>
-                        </td>
-                        <td>
-                            <span class="text-muted">`+ i.type + `</span>
-                        </td>
-                        <td>
-                            <button type="button"
-                            class="btn btn-info btn-circle btn-lg btn-circle ml-2"
-                            onclick=\'editar(`+ JSON.stringify(i) + `)\'><i
-                            class="fa fa-edit"></i> </button>`;
-
-        if (i.type != "ADMIN") {
-            tablaUsuarios += `<button type="button"
-                            class="btn btn-danger btn-circle btn-lg btn-circle ml-2" 
-                            onclick=\'eliminar(`+ JSON.stringify(i) + `)\'><i
-                            class="fa fa-trash"></i> </button>
-                        </td>`
-        }
-        else {
-            tablaUsuarios += `</td>`
-        }
-
-    }
-    document.getElementById("cuerpoTabla").innerHTML = tablaUsuarios;
 }
