@@ -2,11 +2,17 @@
  * URL de acceso a recurso
  */
 const BASE_URL = "http://localhost:8080/api/user";
+var editProdTrue_createFalse = true;
 
 /**
  * Esperar a que los elementos HTML esten cargados:
  */
 window.onload = function () {
+
+    onLoadAdminjs();
+    onLoadAdminAccessoryjs();
+
+    document.getElementById("botonEditarProducto").addEventListener("click", actualizarProducto);
 
     document.getElementById("editarDatos").addEventListener("click", actualizarCambios);
     document.getElementById("botonEliminar").hidden = true;
@@ -21,6 +27,10 @@ window.onload = function () {
     document.getElementById("tablaProductos").hidden = true;
 }
 
+function onLoadAdminjs(){
+    console.log('pruebaOnLoadAdminjs');    
+}
+
 async function getUser(id) {
     try {
         const url = BASE_URL + '/' + id;
@@ -33,7 +43,7 @@ async function getUser(id) {
         };
         const response = await fetch(url, fetchOptions);
         const responseConverted = await response.json();
-        console.log(`esta es la respuesta`, responseConverted);
+        console.log(`getUser: esta es la respuesta`, responseConverted);
         //Enviando al HTML los datos que provienen de la URL:
         document.getElementById("name").textContent = responseConverted.name;
         document.getElementById("email").textContent = responseConverted.email;
@@ -293,7 +303,7 @@ async function verificarCorreo(email) {
         };
         const response = await fetch(url, fetchOptions);
         const responseConverted = await response.json();
-        console.log(`esta es la respuesta`, responseConverted);
+        console.log(`VerificarCorreo: esta es la respuesta`, responseConverted);
         if (responseConverted) {
             return true;
         } else {

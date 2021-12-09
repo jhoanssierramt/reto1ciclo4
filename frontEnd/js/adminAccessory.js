@@ -3,6 +3,10 @@
  */
 const BASE_URL_ACCESSORY = "http://localhost:8080/api/accessory";
 
+function onLoadAdminAccessoryjs(){
+    console.log('pruebaOnLoadAdminAccessoryjs');    
+}
+
 /**
  * Muestra la tabla de productos, 
  * lanza funcion que recarga tabla.
@@ -97,6 +101,7 @@ async function getAllAccessory() {
 }
 
 function editarProducto(producto) {
+    editProdTrue_createFalse = true;
     console.log("accesorio a Editar: ", producto.reference);
     $("#modalRerenciaProd").val(producto.reference);
     $("#modalMarcaProd").val(producto.brand);
@@ -104,14 +109,15 @@ function editarProducto(producto) {
     $("#modalMaterialProd").val(producto.material);
     $("#modalGeneroProd").val(producto.gender);
     $("#modalTallaProd").val(producto.size);
-    $("#modalDispoProd").val(producto.availability);
+    $("#modalDispoProd").val(producto.availability+""); //+"" permite pasar de booleano a String
     $("#modalPrecioProd").val(producto.price);
     $("#modalCantidadProd").val(producto.quantity);
     $("#modalImagenProd").val(producto.photography);
     $("#modalDescripcionProd").val(producto.description);
 
     document.getElementById("modalRerenciaProd").disabled = true;
-    document.getElementById("botonEditarProducto").addEventListener("click", actualizarProducto);
+    //Este lístener se configura en el onload de adminjs:
+    //document.getElementById("botonEditarProducto").addEventListener("click", actualizarProducto);
     $('#modalProducto').modal('show');
 }
 
@@ -124,7 +130,7 @@ function mostrarMensajeProducto(mensaje, titulo) {
     document.getElementById("botonEliminar").hidden = true;
     $("#mensaje").html(mensaje);
     $("#tituloModalMensaje").html(titulo);
-    $('#modalProducto').modal('show');
+    $('#modalMensaje').modal('show');
 }
 
 /**
@@ -135,16 +141,21 @@ function mostrarMensajeProducto(mensaje, titulo) {
 
 async function actualizarProducto(event) {
     event.preventDefault();
-    let verificacion = verificarDatosModal();
-    if (!verificacion) {
-        peticionActualizarProd();
+    console.log("actualizarProducto flag:",editProdTrue_createFalse);
+    if(editProdTrue_createFalse)
+    {
+        let verificacion = await verificarDatosModal("PUT");
+        console.log("verificación PUT:",verificacion);
+        if (!verificacion) {
+            await peticionActualizarProd();
+        }
     }
 }
 
 /**
  * Peticion PUT para actualizar producto
  */
-function peticionActualizarProd() {
+async function peticionActualizarProd() {
     try {
         const url = BASE_URL_ACCESSORY + '/update';
         console.log("url: ", url);
@@ -157,6 +168,16 @@ function peticionActualizarProd() {
             body: capturarDatosProducto()
         };
 
+        const response = await fetch(url, fetchOptions).then(function () {
+            console.log("-- Peticion PUT actualizar producto --");
+            //const responseConverted = await response.json();
+            //console.log(responseConverted);
+            mostrarMensajeProducto("Producto Actualizado Exitosamente", "MENSAJE");
+            cerrarModalProducto();            
+            cargarTablaProductos();
+        });
+        
+        /*
         let peticion = new Request(url, fetchOptions);
 
         fetch(peticion).then(function (items) {
@@ -166,6 +187,7 @@ function peticionActualizarProd() {
             mostrarMensajeProducto("Producto Actualizado Exitosamente", "MENSAJE");
             cargarTablaProductos();
         });
+        */
     }
     catch (error) {
         console.log(`error`, error);
@@ -200,6 +222,7 @@ function capturarDatosProducto() {
  */
 function nuevoProducto() {
 
+    editProdTrue_createFalse = false;
     document.getElementById("botonEditarProducto").addEventListener("click", crearProducto);
     document.getElementById("modalRerenciaProd").disabled = false;
 
@@ -213,7 +236,7 @@ function nuevoProducto() {
     $("#modalGeneroProd").val("");
     $("#modalTallaProd").val("");
     $("#modalDescripcionProd").val("");
-    $("#modalDispoProd").val("True");
+    $("#modalDispoProd").val("true");
     $("#modalPrecioProd").val("");
     $("#modalCantidadProd").val("");
     $("#modalImagenProd").val("");
@@ -228,16 +251,19 @@ function nuevoProducto() {
  */
 async function crearProducto(event) {
     event.preventDefault();
-    let verificacion = verificarDatosModal();
-    if (!verificacion) {
-        peticionCrearProd();
-    }
+    if(!editProdTrue_createFalse)
+    {
+        let verificacion = await verificarDatosModal("POST");
+        if (!verificacion) {
+            await peticionCrearProd();
+        }
+    }    
 }
 
 /**
  * Peticion POST para crear producto
  */
-function peticionCrearProd() {
+async function peticionCrearProd() {
     try {
         const url = BASE_URL_ACCESSORY + '/new';
 
@@ -249,6 +275,17 @@ function peticionCrearProd() {
             body: capturarDatosProducto()
         };
 
+        const response = await fetch(url, fetchOptions).then(function () {
+            console.log("-- Peticion POST crear producto --");
+            //const responseConverted = await response.json();
+            //console.log(responseConverted);
+            cerrarModalProducto();
+            mostrarMensajeProducto("Producto Creado Exitosamente", "MENSAJE");
+            cargarTablaProductos();
+        });
+
+        /*
+
         let peticion = new Request(url, fetchOptions);
 
         fetch(peticion).then(function (items) {
@@ -258,6 +295,7 @@ function peticionCrearProd() {
             mostrarMensajeProducto("Producto Creado Exitosamente", "MENSAJE");
             cargarTablaProductos();
         });
+        */
     }
     catch (error) {
         console.log(`error`, error);
@@ -269,15 +307,15 @@ function peticionCrearProd() {
  * Verificar datos que se van a enviar en POST y PUT,
  * nuevoProducto() y actualizarProducto()
  */
-function verificarDatosModal() {
-
-    let $reference = document.getElementById("modalRerenciaProd").value.trim();
+async function verificarDatosModal(operacion) {
+    console.log("Estoy Aqui");
+    let $reference = document.getElementById("modalRerenciaProd").value;
     let $brand = document.getElementById("modalMarcaProd").value.trim();
     let $category = document.getElementById("modalCategoria").value.trim();
     let $material = document.getElementById("modalMaterialProd").value.trim();
-    let $gender = document.getElementById("modalGeneroProd").value.trim();
+    let $gender = document.getElementById("modalGeneroProd").value;
     let $size = document.getElementById("modalTallaProd").value.trim();
-    let $availability = document.getElementById("modalDispoProd").value.trim();
+    let $availability = document.getElementById("modalDispoProd").value;
     let $price = document.getElementById("modalPrecioProd").value.trim();
     let $quantity = document.getElementById("modalCantidadProd").value.trim();
     let $photography = document.getElementById("modalImagenProd").value.trim();
@@ -287,13 +325,19 @@ function verificarDatosModal() {
         || $gender.length <= 0 || $size.length <= 0 || $availability.length <= 0 || $price.length <= 0
         || $quantity.length <= 0 || $description.length <= 0 || $photography.length <= 0) {
         console.log("-- campos vacios --");
-        console.log($reference, $brand, $category, $material, $gender, $size, $availability, $price, $quantity, $description);
+        //console.log($reference, $brand, $category, $material, $gender, $size, $availability, $price, $quantity, $description);
         mostrarMensaje("Todos los campos son obligatorios", "ADVERTENCIA");
         return true;
-    } else if (verificarReferencia($reference)){
-        console.log("-- referencia repetida --");
-        mostrarMensaje("La referencia ya existe", "ADVERTENCIA");
-        return true;
+    } else if (operacion == "POST"){
+        if(await verificarReferencia($reference))
+        {
+            console.log("-- referencia repetida --");
+            mostrarMensaje("La referencia ya existe", "ADVERTENCIA");
+            return true;
+        }else {
+            console.log("verificarReferencia FALSO");
+            return false;
+        }
     }
     else {
         return false;
@@ -312,7 +356,7 @@ async function verificarReferencia(referencia) {
         };
         const response = await fetch(url, fetchOptions);
         const responseConverted = await response.json();
-        console.log(`esta es la respuesta`, responseConverted);
+        console.log(`verificarReferencia: esta es la respuesta`, responseConverted);
         if (responseConverted.reference != null) {
             return true;
         } else {

@@ -125,7 +125,7 @@
                                                     <th scope="col" class="border-0 text-uppercase font-medium">
                                                         Material</th>
                                                     <th scope="col" class="border-0 text-uppercase font-medium">
-                                                        Genero</th>
+                                                        Género</th>
                                                     <th scope="col" class="border-0 text-uppercase font-medium">
                                                         Talla</th>
                                                     <th scope="col" class="border-0 text-uppercase font-medium">
@@ -260,11 +260,11 @@
                                     autocomplete="off">
                             </div>
                             <div class="col-sm-12 col-lg-6">
-                                <label for="modalGeneroProd" class="form-label">Genero</label>
+                                <label for="modalGeneroProd" class="form-label">Género</label>
                                 <select class="form-control category-select" id="modalGeneroProd">
-                                    <option>Hombre</option>
-                                    <option>Mujer</option>
-                                    <option>No binario</option>
+                                    <option value="MAN">MAN</option>
+                                    <option value="WOMAN">WOMAN</option>
+                                    <option value="UNDEFINED">UNDEFINED</option>
                                 </select>
                             </div>
                             <div class="col-sm-12 col-lg-6">
@@ -274,8 +274,10 @@
                             </div>
                             <div class="col-sm-12 col-lg-6">
                                 <label for="modalDispoProd" class="form-label">Disponibilidad</label>
-                                <input type="text" class="form-control" id="modalDispoProd" placeholder="disponibilidad"
-                                    autocomplete="off">
+                                <select class="form-control category-select" id="modalDispoProd">
+                                    <option value="true">true</option>
+                                    <option value="false">false</option>
+                                </select>
                             </div>
                             <div class="col-sm-12 col-lg-6">
                                 <label for="modalPrecioProd" class="form-label">Precio</label>
