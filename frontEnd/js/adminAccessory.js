@@ -27,7 +27,8 @@ async function cargarTablaProductos() {
     for (let i of items) {
         tablaProductos += `<tr>
                         <td>
-                        <span class="text-muted">`+ i.photography + `</span>
+                        <img src="`+ i.photography + `" alt="Accesorio" style="width:50px;height:50px;"
+                        onerror="this.src='./images/no_d.png'">
                         </td>
                         <td>
                         <span>`+ i.reference + `</span><br>    

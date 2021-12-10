@@ -84,3 +84,14 @@ p {
 .registro{
     font-size: 20px;
 }
+
+#inicio{
+    display: table;
+    align-items: center;
+    
+}
+
+#inicio_hijo{
+    display: table-cell;
+    vertical-align: middle;
+}
