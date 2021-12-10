@@ -2,7 +2,13 @@ body{
     margin-top:20px;
     color: #1a202c;
     text-align: left;
-    background-color: #e2e8f0;    
+    background-color: #e2e8f0; 
+    
+    background-image: url('../images/logog.png');
+    background-repeat:no-repeat;
+    background-attachment: fixed;
+    background-size: auto;
+    background-position:center;
 }
 .main-body {
     padding: 15px;

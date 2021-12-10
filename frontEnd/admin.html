@@ -6,6 +6,7 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Admin</title>
+    <link rel="shortcut icon" type="image/jpg" href="./images/logo.png"/>
     <!--Imports-->
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css"
         integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
@@ -115,7 +116,7 @@
                                             <thead>
                                                 <tr>
                                                     <th scope="col" class="border-0 text-uppercase font-medium">
-                                                        Imagen</th>
+                                                        Link Imagen</th>
                                                     <th scope="col" class="border-0 text-uppercase font-medium">
                                                         Referencia</th>
                                                     <th scope="col" class="border-0 text-uppercase font-medium">
@@ -192,9 +193,9 @@
                             <div class="col-sm-12 col-lg-6">
                                 <label for="name" class="form-label">Tipo</label>
                                 <select class="form-control category-select" id="tipoModal">
-                                    <option>ASESOR</option>
-                                    <option>COORD</option>
-                                    <option>ADMIN</option>
+                                    <option value="ASESOR">ASESOR</option>
+                                    <option value="COORD">COORD</option>
+                                    <option value="ADMIN">ADMIN</option>
                                 </select>
                             </div>
                             <div class="col-sm-12 col-lg-6">
@@ -290,8 +291,8 @@
                                     id="modalCantidadProd" autocomplete="off">
                             </div>
                             <div class="col-sm-12 col-lg-6">
-                                <label for="modalImagenProd" class="form-label">Imagen</label>
-                                <input type="text" class="form-control" id="modalImagenProd" 
+                                <label for="modalImagenProd" class="form-label">URL Imagen</label>
+                                <input type="text" class="form-control" id="modalImagenProd" placeholder="URL"
                                 autocomplete="off">
                             </div>
                             <div class="col-sm-12 col-lg-6">
