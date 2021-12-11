@@ -3,6 +3,12 @@
  */
 const BASE_URL = "http://localhost:8080/api/user";
 
+
+/**
+ * Datos asesor
+ */
+var datosAsesor = {};
+
 /**
  * Esperar a que los elementos HTML esten cargados:
  */
@@ -16,6 +22,7 @@ window.onload = function () {
     document.getElementById("botonCancelar").onclick = cerrarModalMensaje;
     document.getElementById("botonMostrarModalAgregarItem").onclick= mostrarModalAgregarItem;
     document.getElementById("botonCrearOrdenPedido").onclick = mostrarCrearPedido;
+    document.getElementById("botonEnviarOrdenPedido").onclick = enviarOrdenPedido;
 
     //Aquí se obtienen los parámetros que se enviaron a través de la URL:
     const queryString = window.location.search;
@@ -49,6 +56,10 @@ async function getUser(id) {
         document.getElementById("identification").textContent = responseConverted.identification;
         document.getElementById("zone").textContent = responseConverted.zone;
         document.getElementById('botonEditarPerfil').setAttribute("onclick", "editar(" + JSON.stringify(responseConverted) + ", true)");
+
+        datosAsesor = responseConverted;
+        console.log("-- datos asesor --",datosAsesor);
+
     } catch (error) {
         console.log(`error`, error);
     }
