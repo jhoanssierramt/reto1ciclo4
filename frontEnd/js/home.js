@@ -7,18 +7,32 @@ const BASE_URL = "http://localhost:8080/api/user";
  * Esperar a que los elementos HTML esten cargados:
  */
 window.onload = function () {
-    document.getElementById("editarDatos").addEventListener("click", actualizarCambios);
+
+    document.getElementById("editarPerfil").addEventListener("click",actualizarCambios);
+
+    document.getElementById("tablaCrearOrden").hidden = true;
+    document.getElementById("botonAgregarItem").addEventListener("click", mostrarItemEnTabla);
+    document.getElementById("botonCancelarAgregarItem").onclick = cerrarModalAgregarItem;
+    document.getElementById("botonCancelar").onclick = cerrarModalMensaje;
+    document.getElementById("botonMostrarModalAgregarItem").onclick= mostrarModalAgregarItem;
+    document.getElementById("botonCrearOrdenPedido").onclick = mostrarCrearPedido;
+
     //Aquí se obtienen los parámetros que se enviaron a través de la URL:
     const queryString = window.location.search;
     const urlParams = new URLSearchParams(queryString);
     const $id = urlParams.get('id');
     getUser($id);
+
 }
 
+/**
+ * Trae los datos de inicio, 
+ * se ven datos en la parte izquierda
+ */
 async function getUser(id) {
     try {
         const url = BASE_URL + '/' + id;
-        console.log("url: ", url);
+        console.log("GET user: ", url);
         const fetchOptions = {
             method: "GET",
             headers: {
@@ -32,11 +46,14 @@ async function getUser(id) {
         document.getElementById("name").textContent = responseConverted.name;
         document.getElementById("email").textContent = responseConverted.email;
         document.getElementById("type").textContent = responseConverted.type;
-        document.getElementById('editarPerfil').setAttribute("onclick", "editar(" + JSON.stringify(responseConverted) + ")");
+        document.getElementById("identification").textContent = responseConverted.identification;
+        document.getElementById("zone").textContent = responseConverted.zone;
+        document.getElementById('botonEditarPerfil').setAttribute("onclick", "editar(" + JSON.stringify(responseConverted) + ", true)");
     } catch (error) {
         console.log(`error`, error);
     }
 }
+
 
 async function getAllUsers() {
     try {
@@ -117,7 +134,7 @@ async function actualizarCambios(event) {
     else {
         try {
             const url = BASE_URL + '/update';
-            console.log("url: ", url);
+            console.log("Update: ", url);
             const fetchOptions = {
                 method: "PUT",
                 headers: {
@@ -180,8 +197,8 @@ function mostrarMensaje(mensaje, titulo) {
     $('#modalMensaje').modal('show');
 }
 
-var cerrarModalMensaje = function (reload = false) {
-    $('#modalMensaje').modal('hide');
-    window.location.reload();
-    return false;
-}
+// var cerrarModalMensaje = function (reload = false) {
+//     $('#modalMensaje').modal('hide');
+//     window.location.reload();
+//     return false;
+// }
