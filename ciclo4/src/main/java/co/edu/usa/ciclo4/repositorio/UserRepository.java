@@ -44,4 +44,8 @@ public class UserRepository {
     public void delete(User user){
         crud.delete(user);
     }
+    
+    public List<User> getUsersByZone(String zone){
+        return crud.getUsersByZone(zone);
+    }
 }

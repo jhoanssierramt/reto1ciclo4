@@ -1,29 +1,29 @@
 /**
  * URL de acceso a recurso
  */
-const BASE_URL_ORDER= "http://localhost:8080/api/order";
+const BASE_URL_ORDER = "http://localhost:8080/api/order";
 const BASE_URL_ACCESSORY = "http://localhost:8080/api/accessory";
 
 /**
  * Muestra la tabla de productos, 
  * al pulsar boton
  */
-function mostrarCrearPedido(){
+function mostrarCrearPedido() {
 
     // cargarTablaProductosAsesor();
     document.getElementById("tablaCrearOrden").hidden = false;
-    
+
 }
 
 /**
  * Funcion que muestra formulario modal para agregar item.
  */
- function mostrarModalAgregarItem() {
+function mostrarModalAgregarItem() {
 
     // editProdTrue_createFalse = false; //Pruebas Johan
 
     console.log("Se pulsó el boton de mostrarModalAgregarItem");
-    
+
     /**
      * Se ejecuta funcion que trae las referencias disponibles
      */
@@ -40,7 +40,7 @@ function mostrarCrearPedido(){
     document.getElementById('modalImagenProd').disabled = true;
     document.getElementById('modalDescripcionProd').disabled = true;
 
-    
+
     $('#modalAgregarItem').modal('show');
 }
 
@@ -49,27 +49,28 @@ function mostrarCrearPedido(){
  * para mostrarlos en lista desplegable de modal
  * 
  */
- function modalDespliegaItem(){
+function modalDespliegaItem() {
     try {
-        let opciones = {    method: 'GET',
-                        headers: {'Content-Type': 'application/json'},
-                    };
-    
-        let peticion = new Request(BASE_URL_ACCESSORY+'/all', opciones);
-    
+        let opciones = {
+            method: 'GET',
+            headers: { 'Content-Type': 'application/json' },
+        };
+
+        let peticion = new Request(BASE_URL_ACCESSORY + '/all', opciones);
+
         fetch(peticion)
             .then(response => response.json())
-            .then(function(items) {
+            .then(function (items) {
                 createListaDespliegueItem(items);
                 console.log("--- Lista de productos Modal ---");
                 console.log(items)
             });
-    
-    }  catch (error) {
+
+    } catch (error) {
         console.log(`error`, error);
     }
 }
-    
+
 
 /**
  * funcion encargada de mostrar la lista de items
@@ -77,22 +78,22 @@ function mostrarCrearPedido(){
  * 
  * @param {} items 
  */
- function createListaDespliegueItem(items){
+function createListaDespliegueItem(items) {
 
     /**
      * se vacia la lista de items en modal
      * 
      */
     $("#modalRerenciaProd").empty();
-    
+
     let listaItems = "<option value=''>seleccionar</option>"; //para almacenar etiquetas option
 
-    for(let i of items){
-        let reference = i.reference; 
-        listaItems+= "<option value='"+reference+"'>"+reference+"</option>"; //etiqueta option para añadir a select
-        
+    for (let i of items) {
+        let reference = i.reference;
+        listaItems += "<option value='" + reference + "'>" + reference + "</option>"; //etiqueta option para añadir a select
+
     }
-    $("#modalRerenciaProd").html(listaItems); 
+    $("#modalRerenciaProd").html(listaItems);
 
     document.getElementById('modalRerenciaProd').addEventListener('change', cargarDatosModal);
 
@@ -102,12 +103,12 @@ function mostrarCrearPedido(){
  * Autocompleta los datos del modal,
  * al seleccionar una referencia
  */
-async function cargarDatosModal(){
+async function cargarDatosModal() {
 
     console.log("-- cargar datos modal --")
     let item = await getAccessoryByReference(document.getElementById('modalRerenciaProd').value);
 
-    if(document.getElementById('modalRerenciaProd').value){
+    if (document.getElementById('modalRerenciaProd').value) {
 
         document.getElementById('modalMarcaProd').value = item.brand;
         document.getElementById('modalCategoria').value = item.category;
@@ -120,10 +121,10 @@ async function cargarDatosModal(){
         document.getElementById('modalImagenProd').value = item.photography;
         document.getElementById('modalDescripcionProd').value = item.description;
 
-    }else{
+    } else {
         document.getElementById("formModalAgregarItem").reset();
     }
-    
+
 
 }
 
@@ -137,7 +138,7 @@ let cerrarModalAgregarItem = function () {
 /**
  * ocultar modal de mensaje
  */
-let cerrarModalMensaje = function(){
+let cerrarModalMensaje = function () {
     $('#modalMensaje').modal('hide');
 }
 
@@ -146,82 +147,91 @@ let cerrarModalMensaje = function(){
  * Agrega el item que se encuentra en el modal, 
  * a la tabla orden de pedido
  */
-async function mostrarItemEnTabla(event){
-    
+async function mostrarItemEnTabla(event) {
+    event.preventDefault();
     try {
-        
-        event.preventDefault();
-        
+
         console.log("-- cargar item en tabla --")
         let item = await getAccessoryByReference(document.getElementById('modalRerenciaProd').value);
-        
-        if(document.getElementById('modalRerenciaProd').value){
-            let itemOrdenPedido = `<tr>
-                                <td>
-                                <img src="`+ item.photography + `" alt="Accesorio" style="width:50px;height:50px;"
-                                onerror="this.src='./images/no_d.png'">
-                                </td>
-                                <td>
-                                <span>`+ item.reference + `</span><br>    
-                                </td>
-                                <td>
-                                    <span class="text-muted">`+ item.brand + `</span>
-                                </td>
-                                <td>
-                                    <span class="text-muted">`+ item.category + `</span>
-                                </td>
-                                <td>
-                                    <span class="text-muted">`+ item.material + `</span>
-                                </td>
-                                <td>
-                                    <span class="text-muted">`+ item.gender + `</span>
-                                </td>
-                                <td>
-                                    <span class="text-muted">`+ item.size + `</span>
-                                </td>
-                                <td>
-                                    <span class="text-muted">`+ item.price + `</span>
-                                </td>
-                                <td>
-                                <span class="text-muted">`+ item.description + `</span>
-                                </td>
-                                <td>
-                                <span class="text-muted">`+ document.getElementById("modalCantidadItem").value + `</span>
-                                </td>
-                                <td>
-                                    
-                                    <button type="button"
-                                    class="btn btn-danger btn-circle btn-lg btn-circle ml-2"
-                                    onclick=\'removeToOrder(`+ JSON.stringify(item) + `)\'><i
-                                    class="fas fa-minus"></i> </button>
-                                </td>`;
 
-                                // <button type="button"
-                                //     class="btn btn-info btn-circle btn-lg btn-circle ml-2"
-                                //     onclick=\'addToOrder(`+ JSON.stringify(item) + `)\'><i
-                                //     class="fas fa-plus"></i> </button>
-            
-            document.getElementById("cuerpoTablaProductosAsesor").insertAdjacentHTML("afterbegin",itemOrdenPedido);
+        let tabla = document.getElementById("cuerpoTablaProductosAsesor");
+
+        let repetido = false;
+        for (var i = 0, row; row = tabla.rows[i]; i++) {
+            for (var j = 0, col; col = row.cells[j]; j++) {
+                let columna = col.innerText;
+                if (j == 1 && columna.trim() == item.reference) {
+                    console.log("REPETIDO")
+                    repetido = true;
+                }
+            }
+        }
+
+        if (item && !repetido) {
+            let itemOrdenPedido = `<tr id='` + item.reference + `'>
+                        <td>
+                        <img src="`+ item.photography + `" alt="Accesorio" style="width:50px;height:50px;"
+                        onerror="this.src='./images/no_d.png'">
+                        </td>
+                        <td>
+                        <span>`+ item.reference + `</span><br>    
+                        </td>
+                        <td>
+                            <span class="text-muted">`+ item.brand + `</span>
+                        </td>
+                        <td>
+                            <span class="text-muted">`+ item.category + `</span>
+                        </td>
+                        <td>
+                            <span class="text-muted">`+ item.material + `</span>
+                        </td>
+                        <td>
+                            <span class="text-muted">`+ item.gender + `</span>
+                        </td>
+                        <td>
+                            <span class="text-muted">`+ item.size + `</span>
+                        </td>
+                        <td>
+                            <span class="text-muted">`+ item.price + `</span>
+                        </td>
+                        <td>
+                        <span class="text-muted">`+ item.description + `</span>
+                        </td>
+                        <td>
+                        <span class="text-muted">`+ document.getElementById("modalCantidadItem").value + `</span>
+                        </td>
+                        <td>
+                            
+                            <button type="button"
+                            class="btn btn-danger btn-circle btn-lg btn-circle ml-2"
+                            onclick=\'removeToOrder(`+ JSON.stringify(item) + `)\'><i
+                            class="fas fa-minus"></i> </button>
+                        </td>`;
+
+            // <button type="button"
+            //     class="btn btn-info btn-circle btn-lg btn-circle ml-2"
+            //     onclick=\'addToOrder(`+ JSON.stringify(item) + `)\'><i
+            //     class="fas fa-plus"></i> </button>
+
+            document.getElementById("cuerpoTablaProductosAsesor").insertAdjacentHTML("afterbegin", itemOrdenPedido);
             mostrarMensaje("Item agregado", "Aviso");
             document.getElementById("formModalAgregarItem").reset();
-        }else{
-            mostrarMensaje("Item NO agregado", "Aviso");
+        } else {
+            mostrarMensaje("Item NO agregado, no se pueden accesorios repetidos", "Aviso");
         }
 
     } catch (error) {
         console.log("error: ", error);
     }
-    
+
 }
 
 /**
  * Boton rojo para quitar producto de lista
  * @param {} item 
  */
-async function removeToOrder(item){
-
-    console.log(item);
-    console.log("datos de orden:",await consolidarDatosOrden());
+async function removeToOrder(item) {
+    document.getElementById(item.reference).remove();
 }
 
 
@@ -229,7 +239,7 @@ async function removeToOrder(item){
  * Se capturan datos de tabla y cantidades
  * @returns JSON
  */
- async function capturarProductosYcantidades(){
+async function capturarProductosYcantidades() {
 
     let tabla = document.getElementById("cuerpoTablaProductosAsesor");
 
@@ -241,48 +251,48 @@ async function removeToOrder(item){
 
         for (var j = 0, col; col = row.cells[j]; j++) {
 
-        // https://es.stackoverflow.com/questions/425986/como-recorrer-una-tabla-de-html-con-javascript
-        //   console.log(`Txt: ${col.innerText} \tFila: ${i} \t Celda: ${j}`);
-          
-        let columna = col.innerText;
-        
-            if(j == 1){
+            // https://es.stackoverflow.com/questions/425986/como-recorrer-una-tabla-de-html-con-javascript
+            //   console.log(`Txt: ${col.innerText} \tFila: ${i} \t Celda: ${j}`);
+
+            let columna = col.innerText;
+
+            if (j == 1) {
 
                 let referencia = columna;
                 let productoRetorno = await getAccessoryByReference(referencia);
-                productos[productoRetorno.reference]=productoRetorno;
+                productos[productoRetorno.reference] = productoRetorno;
                 referenciaAux = productoRetorno.reference;
-            } 
+            }
 
-            if(j == 9){
+            if (j == 9) {
 
                 let cantidad = columna;
-                cantidades[referenciaAux]=+cantidad;
-                
-            }
-        }  
+                cantidades[referenciaAux] = +cantidad;
 
-      }
+            }
+        }
+
+    }
 
     //   console.log("productos agregados: ",productos);
     //   console.log("cantidades agregadas: ",cantidades);
-      
-      return {products:productos,quantities:cantidades};
+
+    return { products: productos, quantities: cantidades };
 }
 
 
 /**
  * Funcion encarga de capturar fecha y crear ID pedido
  */
-function capturarCabeceraOrden(){
+function capturarCabeceraOrden() {
 
     const id = Date.now();
     const idOrden = id - parseInt(id / 1000000) * 1000000;
 
     let fecha = new Date().toISOString();
-    fecha = fecha.slice(0,19);
-    
-    return {id:idOrden,registerDay:fecha,status:"Pendiente"};
+    fecha = fecha.slice(0, 19);
+
+    return { id: idOrden, registerDay: fecha, status: "Pendiente" };
 
 }
 
@@ -290,18 +300,18 @@ function capturarCabeceraOrden(){
  * Se ajusta la respuesta en JSON
  * @returns datos orden pedido
  */
-async function consolidarDatosOrden(){
+async function consolidarDatosOrden() {
 
     let cabecera = capturarCabeceraOrden();
     let prodYCant = await capturarProductosYcantidades();
 
     let datos = {
-        id:cabecera.id,
-        registerDay:cabecera.registerDay,
-        status:cabecera.status,
-        salesMan:datosAsesor,
+        id: cabecera.id,
+        registerDay: cabecera.registerDay,
+        status: cabecera.status,
+        salesMan: datosAsesor,
         products: prodYCant.products,
-        quantities:prodYCant.quantities
+        quantities: prodYCant.quantities
     }
 
     return JSON.stringify(datos);
@@ -312,17 +322,19 @@ async function consolidarDatosOrden(){
  * Funcion que se ejecuta al pulsar boton Enviar orden de pedido
  */
 
-async function enviarOrdenPedido(){
+async function enviarOrdenPedido() {
 
-    if(document.getElementById("cuerpoTablaProductosAsesor").innerHTML != ""){
-        console.log("envio datos: ",consolidarDatosOrden());
-        await postNewOrder();
+    if (document.getElementById("cuerpoTablaProductosAsesor").innerHTML != "") {
+        console.log("envio datos: ", consolidarDatosOrden());
+        let ans = await postNewOrder();
+        mostrarMensaje("Orden de pedido enviada con ID: "+ans.id, "AVISO");
+        setTimeout(() => {
+            window.location.reload();}, 1500);
 
-    }else{
-        mostrarMensaje("Agregue productos a la orden","AVISO")
-        
+    } else {
+        mostrarMensaje("Agregue productos a la orden", "AVISO")
     }
-   
+
 }
 
 /**
@@ -330,7 +342,7 @@ async function enviarOrdenPedido(){
  * 
  * @returns respuesta Backend
  */
-async function postNewOrder(){
+async function postNewOrder() {
 
     try {
         const url = BASE_URL_ORDER + '/new';
@@ -358,7 +370,7 @@ async function postNewOrder(){
  * 
  * @returns Lista Productos
  */
- async function getAllAccessory() {
+async function getAllAccessory() {
     try {
         const url = BASE_URL_ACCESSORY + '/all';
         console.log("GET all accessory : ", url);

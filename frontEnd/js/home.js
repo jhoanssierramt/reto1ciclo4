@@ -21,7 +21,6 @@ window.onload = function () {
     document.getElementById("botonCancelarAgregarItem").onclick = cerrarModalAgregarItem;
     document.getElementById("botonCancelar").onclick = cerrarModalMensaje;
     document.getElementById("botonMostrarModalAgregarItem").onclick= mostrarModalAgregarItem;
-    document.getElementById("botonCrearOrdenPedido").onclick = mostrarCrearPedido;
     document.getElementById("botonEnviarOrdenPedido").onclick = enviarOrdenPedido;
 
     //Aquí se obtienen los parámetros que se enviaron a través de la URL:
@@ -36,7 +35,7 @@ window.onload = function () {
  * Trae los datos de inicio, 
  * se ven datos en la parte izquierda
  */
-async function getUser(id) {
+ async function getUser(id) {
     try {
         const url = BASE_URL + '/' + id;
         console.log("GET user: ", url);
@@ -52,11 +51,21 @@ async function getUser(id) {
         //Enviando al HTML los datos que provienen de la URL:
         document.getElementById("name").textContent = responseConverted.name;
         document.getElementById("email").textContent = responseConverted.email;
-        document.getElementById("type").textContent = responseConverted.type;
+        //document.getElementById("type").textContent = responseConverted.type;
+        if (responseConverted.type=="ASE"){
+            document.getElementById("type").textContent = "ASESOR COMERCIAL";
+        } else {
+            document.getElementById("type").textContent = "COORDINADOR DE ZONA";
+        }
         document.getElementById("identification").textContent = responseConverted.identification;
         document.getElementById("zone").textContent = responseConverted.zone;
         document.getElementById('botonEditarPerfil').setAttribute("onclick", "editar(" + JSON.stringify(responseConverted) + ", true)");
-
+        await coordInZone(responseConverted.zone);
+        if(responseConverted.type=="COORD"){
+            document.getElementById("botonCrearOrdenPedido").innerHTML = '<i class="fas fa-search"></i> Ver órdenes de pedidos';
+            document.getElementById("botonCrearOrdenPedido").disabled = false;
+            document.getElementById("botonCrearOrdenPedido").onclick = listaOrdenes;
+        }
         datosAsesor = responseConverted;
         console.log("-- datos asesor --",datosAsesor);
 
@@ -66,7 +75,43 @@ async function getUser(id) {
 }
 
 
-async function getAllUsers() {
+function listaOrdenes(){
+    console.log("ESTA ES FUNC DE VER LISTA ORDENES");
+}
+/**
+ * Trae los datos de inicio, 
+ * se ven datos en la parte izquierda
+ */
+async function coordInZone(zona) {
+    try {
+        const url = BASE_URL + '/coordInZone/' + zona;
+        console.log("GET user: ", url);
+        const fetchOptions = {
+            method: "GET",
+            headers: {
+                "Content-type": "application/json; charset=UTF-8",
+            },
+        };
+        const response = await fetch(url, fetchOptions);
+        const responseConverted = await response.json();
+        console.log(`esta es la respuesta ZONA COORD`, responseConverted);
+        if(responseConverted){
+            document.getElementById("botonCrearOrdenPedido").innerHTML = '<i class="fas fa-box-open"></i> Crear orden de pedido';
+            document.getElementById("botonCrearOrdenPedido").disabled = false;
+            document.getElementById("botonCrearOrdenPedido").onclick = mostrarCrearPedido;
+        } else {
+            document.getElementById("botonCrearOrdenPedido").innerHTML = '<i class="fas fa-hand-paper"></i> No tienes coordinador asignado';
+            document.getElementById("botonCrearOrdenPedido").disabled = true;
+        }
+        //Enviando al HTML los datos que provienen de la URL:
+
+    } catch (error) {
+        console.log(`error`, error);
+    }
+}
+
+
+/* async function getAllUsers() {
     try {
         const url = BASE_URL + '/all';
         console.log("url: ", url);
@@ -83,7 +128,7 @@ async function getAllUsers() {
     } catch (error) {
         console.log(`error`, error);
     }
-}
+} */
 
 function mostrarTablaUsuarios() {
     document.getElementById("tablaUsuarios").hidden = false;
