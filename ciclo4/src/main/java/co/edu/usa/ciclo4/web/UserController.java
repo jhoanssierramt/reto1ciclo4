@@ -103,5 +103,16 @@ public class UserController {
     public User getUserById(@PathVariable("id") Integer id) {
         return servicio.getUser(id).orElse(new User());
     }
+    
+    @GetMapping("/coordInZone/{zone}")
+    public boolean coordInZone(@PathVariable("zone") String zone){
+        List<User> usuariosZona = servicio.getUsersByZone(zone);
+        for (User user : usuariosZona){
+            if ("COORD".equals(user.getType())){
+                return true;
+            }
+        }
+        return false;
+    }
 }
 

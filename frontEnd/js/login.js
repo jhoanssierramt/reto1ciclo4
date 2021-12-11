@@ -70,10 +70,10 @@ function respuestaIngreso(json) {
     //alert("La informacion de inicio de sesion es CORRECTA");
     mostrarMensaje("Bienvenido " + json.name, "Inicio Sesion");
     setTimeout(() => {
-      if(json.type == "ADMIN") {
+      if(json.type == "ADM") {
         window.location.href = "admin.html?id=" + json.id;  
       }
-      else if(json.type == "ASESOR") {
+      else if(json.type == "ASE" || json.type == "COORD") {
         window.location.href = "home.html?id=" + json.id;
       }
     }, 2000);
@@ -217,7 +217,7 @@ function capturarDatosUsuario() {
     address: document.getElementById("addressModal").value,
     cellPhone: document.getElementById("cellphoneModal").value,
     zone: "-",
-    type: "ASESOR"
+    type: "ASE"
 
   };
   return JSON.stringify(datosCapturados);

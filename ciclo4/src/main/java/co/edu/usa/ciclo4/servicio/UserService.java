@@ -111,4 +111,8 @@ public class UserService {
         }).orElse(false);
         return aBoolean;
     } 
+    
+    public List<User> getUsersByZone (String zone){
+        return metodosCrud.getUsersByZone(zone);
+    }
 }

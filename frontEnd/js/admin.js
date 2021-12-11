@@ -47,7 +47,7 @@ async function getUser(id) {
         //Enviando al HTML los datos que provienen de la URL:
         document.getElementById("name").textContent = responseConverted.name;
         document.getElementById("email").textContent = responseConverted.email;
-        document.getElementById("type").textContent = responseConverted.type;
+        document.getElementById("type").textContent = "ADMINISTRADOR";
         document.getElementById('editarPerfil').setAttribute("onclick", "editar(" + JSON.stringify(responseConverted) + ", true)");
     } catch (error) {
         console.log(`error`, error);
