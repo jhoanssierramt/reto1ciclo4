@@ -73,7 +73,7 @@ function respuestaIngreso(json) {
       if(json.type == "ADMIN") {
         window.location.href = "admin.html?id=" + json.id;  
       }
-      else {
+      else if(json.type == "ASESOR") {
         window.location.href = "home.html?id=" + json.id;
       }
     }, 2000);
