@@ -141,16 +141,6 @@ let cerrarModalMensaje = function(){
     $('#modalMensaje').modal('hide');
 }
 
-/**
- * Modal mensaje
- * @param {*} mensaje 
- * @param {*} titulo 
- */
-function mostrarMensaje(mensaje, titulo) {
-    $("#mensaje").html(mensaje);
-    $("#tituloModalMensaje").html(titulo);
-    $('#modalMensaje').modal('show');
-}
 
 /**
  * Agrega el item que se encuentra en el modal, 
@@ -196,6 +186,9 @@ async function mostrarItemEnTabla(event){
                                 <span class="text-muted">`+ item.description + `</span>
                                 </td>
                                 <td>
+                                <span class="text-muted">`+ document.getElementById("modalCantidadItem").value + `</span>
+                                </td>
+                                <td>
                                     
                                     <button type="button"
                                     class="btn btn-danger btn-circle btn-lg btn-circle ml-2"
@@ -207,7 +200,7 @@ async function mostrarItemEnTabla(event){
                                 //     class="btn btn-info btn-circle btn-lg btn-circle ml-2"
                                 //     onclick=\'addToOrder(`+ JSON.stringify(item) + `)\'><i
                                 //     class="fas fa-plus"></i> </button>
-
+            
             document.getElementById("cuerpoTablaProductosAsesor").insertAdjacentHTML("afterbegin",itemOrdenPedido);
             mostrarMensaje("Item agregado", "Aviso");
             document.getElementById("formModalAgregarItem").reset();
@@ -221,11 +214,144 @@ async function mostrarItemEnTabla(event){
     
 }
 
-function removeToOrder(item){
+/**
+ * Boton rojo para quitar producto de lista
+ * @param {} item 
+ */
+async function removeToOrder(item){
+
     console.log(item);
+    console.log("datos de orden:",await consolidarDatosOrden());
 }
 
- 
+
+/**
+ * Se capturan datos de tabla y cantidades
+ * @returns JSON
+ */
+ async function capturarProductosYcantidades(){
+
+    let tabla = document.getElementById("cuerpoTablaProductosAsesor");
+
+    let productos = {};
+    let cantidades = {};
+    let referenciaAux;
+
+    for (var i = 0, row; row = tabla.rows[i]; i++) {
+
+        for (var j = 0, col; col = row.cells[j]; j++) {
+
+        // https://es.stackoverflow.com/questions/425986/como-recorrer-una-tabla-de-html-con-javascript
+        //   console.log(`Txt: ${col.innerText} \tFila: ${i} \t Celda: ${j}`);
+          
+        let columna = col.innerText;
+        
+            if(j == 1){
+
+                let referencia = columna;
+                let productoRetorno = await getAccessoryByReference(referencia);
+                productos[productoRetorno.reference]=productoRetorno;
+                referenciaAux = productoRetorno.reference;
+            } 
+
+            if(j == 9){
+
+                let cantidad = columna;
+                cantidades[referenciaAux]=+cantidad;
+                
+            }
+        }  
+
+      }
+
+    //   console.log("productos agregados: ",productos);
+    //   console.log("cantidades agregadas: ",cantidades);
+      
+      return {products:productos,quantities:cantidades};
+}
+
+
+/**
+ * Funcion encarga de capturar fecha y crear ID pedido
+ */
+function capturarCabeceraOrden(){
+
+    const id = Date.now();
+    const idOrden = id - parseInt(id / 1000000) * 1000000;
+
+    let fecha = new Date().toISOString();
+    fecha = fecha.slice(0,19);
+    
+    return {id:idOrden,registerDay:fecha,status:"Pendiente"};
+
+}
+
+/**
+ * Se ajusta la respuesta en JSON
+ * @returns datos orden pedido
+ */
+async function consolidarDatosOrden(){
+
+    let cabecera = capturarCabeceraOrden();
+    let prodYCant = await capturarProductosYcantidades();
+
+    let datos = {
+        id:cabecera.id,
+        registerDay:cabecera.registerDay,
+        status:cabecera.status,
+        salesMan:datosAsesor,
+        products: prodYCant.products,
+        quantities:prodYCant.quantities
+    }
+
+    return JSON.stringify(datos);
+}
+
+
+/**
+ * Funcion que se ejecuta al pulsar boton Enviar orden de pedido
+ */
+
+async function enviarOrdenPedido(){
+
+    if(document.getElementById("cuerpoTablaProductosAsesor").innerHTML != ""){
+        console.log("envio datos: ",consolidarDatosOrden());
+        await postNewOrder();
+
+    }else{
+        mostrarMensaje("Agregue productos a la orden","AVISO")
+        
+    }
+   
+}
+
+/**
+ * Peticion POST nueva orden pedido
+ * 
+ * @returns respuesta Backend
+ */
+async function postNewOrder(){
+
+    try {
+        const url = BASE_URL_ORDER + '/new';
+        console.log("POST new order : ", url);
+        const fetchOptions = {
+            method: "POST",
+            headers: {
+                "Content-type": "application/json; charset=UTF-8",
+            },
+            body: await consolidarDatosOrden(),
+        };
+        const response = await fetch(url, fetchOptions);
+        const responseConverted = await response.json();
+        console.log(`POST new order`, responseConverted);
+        return responseConverted;
+    } catch (error) {
+        console.log(`error`, error);
+    }
+
+}
+
 /**
  * Funcion encarga de retornar la lista de productos,
  * se realiza una peticion GET al endpoint /api/accessory

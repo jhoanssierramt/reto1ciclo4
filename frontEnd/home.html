@@ -97,11 +97,10 @@
                                                         Descripcion</th>
                                                 </tr>
                                             </thead>
-                                            <tbody id="cuerpoTablaProductosAsesor">
-                                                    <!-- contenido tabla productos -->
-                                            </tbody>
+                                            <tbody id="cuerpoTablaProductosAsesor"></tbody>
                                         </table>
                                     </div>
+                                    <button id="botonEnviarOrdenPedido" class="btn btn-primary">Enviar orden de pedido</button>
                                 </div>
                             </div>
                         </div>
@@ -259,10 +258,14 @@
                                 rows="5" cols="20" maxlength="250" autocomplete="off">
                                 </textarea>
                             </div>
+                            <br>
+                            <div class="col-sm-12 col-lg-6">
+                                <label for="modalCantidadItem" class="form-label">Cantidad</label>
+                                <input id="modalCantidadItem" type="number" class="form-label" placeholder="cantidad" autocomplete="off" min="1">
+                            </div>
                         </div>
                     </div>
                     <div class="modal-footer">
-                        <label for=""></label>
                         <button id="botonAgregarItem" type="submit" class="btn btn-primary">Agregar</button>
                         <button id="botonCancelarAgregarItem" type="button" class="btn btn-secondary">Cancelar</button>
                     </div>
