@@ -38,6 +38,18 @@ public class User {
     @NonNull
     //@Field(name= "user_name")
     private String name;
+
+    /**
+     * campos añadidos para reto 3,
+     * birthDay y monthBirthDay
+     */
+    @NonNull
+    //@Field(name= "user_birthtDay")
+    private String birthtDay;
+
+    @NonNull
+    //@Field(name= "user_monthBirthtDay")
+    private String monthBirthtDay;
     
     @NonNull
     //@Field(name= "user_address")

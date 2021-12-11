@@ -1,0 +1,14 @@
+{
+    "configurations": [
+        {
+            "type": "java",
+            "name": "Spring Boot-Ciclo4Application<ciclo4>",
+            "request": "launch",
+            "cwd": "${workspaceFolder}",
+            "console": "internalConsole",
+            "mainClass": "co.edu.usa.ciclo4.Ciclo4Application",
+            "projectName": "ciclo4",
+            "args": ""
+        }
+    ]
+}
