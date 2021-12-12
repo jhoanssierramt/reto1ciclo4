@@ -27,8 +27,8 @@ window.onload = function () {
     document.getElementById("tablaProductos").hidden = true;
 }
 
-function onLoadAdminjs(){
-    console.log('pruebaOnLoadAdminjs');    
+function onLoadAdminjs() {
+    console.log('pruebaOnLoadAdminjs');
 }
 
 async function getUser(id) {
@@ -103,7 +103,7 @@ async function cargarTabla() {
                             onclick=\'editar(`+ JSON.stringify(i) + `)\'><i
                             class="fa fa-edit"></i> </button>`;
 
-        if (i.type != "ADMIN") {
+        if (i.type != "ADM") {
             tablaUsuarios += `<button type="button"
                             class="btn btn-danger btn-circle btn-lg btn-circle ml-2" 
                             onclick=\'eliminar(`+ JSON.stringify(i) + `)\'><i
@@ -137,6 +137,7 @@ function nuevoUsuario() {
     $("#cellphoneModal").val("");
     $("#zonaModal").val("");
     $("#confPasswordModal").val("");
+    $("#birthDayModal").val("");
 
     $("#tipoModal").val("ASESOR");
 
@@ -159,8 +160,10 @@ async function crearNuevoUsuario(event) {
     let $address = document.getElementById("addressModal").value.trim();
     let $cellphone = document.getElementById("cellphoneModal").value.trim();
     let correoRepetido = await verificarCorreo($email);
+    let $birthtDay = document.getElementById("birthDayModal").value.trim();
+    let $month = $birthtDay.split('-')[1];
     if ($name.length <= 0 || $email.length <= 0 || $password.length <= 0 || $confirm.length <= 0
-        || $ident.length <= 0 || $address.length <= 0 || $cellphone.length <= 0) {
+        || $ident.length <= 0 || $address.length <= 0 || $cellphone.length <= 0 || $birthtDay <= 0 || $month <= 0) {
         mostrarMensaje("Todos los campos son obligatorios", "ADVERTENCIA");
     }
     else if ($password != $confirm) {
@@ -214,7 +217,7 @@ function editar(usuario, isPerfil = false) {
     $("#cellphoneModal").val(usuario.cellPhone);
     $("#zonaModal").val(usuario.zone);
     $("#tipoModal").val(usuario.type);
-
+    $("#birthDayModal").val(usuario.birthtDay.substring(0, 10));
     document.getElementById('passwordModal').disabled = false;
     document.getElementById('emailModal').disabled = false;
     document.getElementById("zonaModal").disabled = isPerfil;
@@ -230,7 +233,7 @@ function editar(usuario, isPerfil = false) {
 
     document.getElementById("emailModal").disabled = true;
     */
-   
+
     $('#modalRegistro').modal('show');
 }
 
@@ -249,8 +252,10 @@ async function actualizarCambios(event) {
     let $address = document.getElementById("addressModal").value.trim();
     let $cellphone = document.getElementById("cellphoneModal").value.trim();
     let correoRepetido = await verificarCorreo($email) && ($email != document.getElementById("hEmailModal").value);
+    let $birthtDay = document.getElementById("birthDayModal").value.trim();
+    let $month = $birthtDay.split('-')[1];
     if ($name.length <= 0 || $email.length <= 0 || $password.length <= 0 || $confirm.length <= 0
-        || $ident.length <= 0 || $address.length <= 0 || $cellphone.length <= 0) {
+        || $ident.length <= 0 || $address.length <= 0 || $cellphone.length <= 0 || $birthtDay <= 0 || $month <= 0) {
         mostrarMensaje("Todos los campos son obligatorios", "ADVERTENCIA");
     }
     else if ($password != $confirm) {
@@ -323,6 +328,8 @@ function capturarDatosUsuario() {
         identification: document.getElementById("identModal").value,
         address: document.getElementById("addressModal").value,
         cellPhone: document.getElementById("cellphoneModal").value,
+        birthtDay: document.getElementById("birthDayModal").value.trim(),
+        monthBirthtDay: document.getElementById("birthDayModal").value.trim().split('-')[1],
         zone: document.getElementById("zonaModal").value,
         type: document.getElementById("tipoModal").value
     };
@@ -368,8 +375,8 @@ async function eliminarRegistro(idRegistro) {
     }
 }
 
-function generarId(){
+function generarId() {
     const id = Date.now() - parseInt(Date.now() / 1000000) * 1000000;
-    console.log("id fecha:",id);
+    console.log("id fecha:", id);
     return id;
 }

@@ -7,15 +7,15 @@ Click nbfs://nbhost/SystemFileSystem/Templates/Other/html.html to edit this temp
 
 <head>
   <title>Calzado Saylor Moon LTDA</title>
-  <link rel="shortcut icon" type="image/jpg" href="./images/logo.png"/>
+  <link rel="shortcut icon" type="image/jpg" href="./images/logo.png" />
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <!-- <base href="/" /> -->
   <!--Imports-->
   <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css"
     integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
-    <script type="text/javascript" src="./js/login.js"></script>
-    <link rel="stylesheet"  href="./style/login.css" />
+  <script type="text/javascript" src="./js/login.js"></script>
+  <link rel="stylesheet" href="./style/login.css" />
 </head>
 
 <body>
@@ -67,7 +67,7 @@ Click nbfs://nbhost/SystemFileSystem/Templates/Other/html.html to edit this temp
       </div>
     </div>
     <!-- Modal para el formulario registrar-->
-    <form>
+    <form id="formModalRegistro">
       <div class="modal fade" id="modalRegistro" tabindex="-1" role="dialog">
         <div class="modal-dialog" role="document">
           <div class="modal-content">
@@ -97,6 +97,10 @@ Click nbfs://nbhost/SystemFileSystem/Templates/Other/html.html to edit this temp
                 <div class="col-sm-12 col-lg-6">
                   <label for="email" class="form-label">Correo</label>
                   <input type="email" class="form-control" id="emailModal" placeholder="Correo" autocomplete="off">
+                </div>
+                <div class="col-sm-12 col-lg-6">
+                  <label for="name" class="form-label">Fecha de nacimiento</label>
+                  <input type="date" class="form-control" id="birthDayModal" autocomplete="off">
                 </div>
                 <div class="col-sm-12 col-lg-6">
                   <label for="password" class="form-label">Contraseña</label>

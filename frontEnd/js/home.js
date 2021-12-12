@@ -55,7 +55,7 @@ window.onload = function () {
         //document.getElementById("type").textContent = responseConverted.type;
         if (responseConverted.type=="ASE"){
             document.getElementById("type").textContent = "ASESOR COMERCIAL";
-        } else {
+        } else if (responseConverted.type=="COORD") {
             document.getElementById("type").textContent = "COORDINADOR DE ZONA";
         }
         document.getElementById("identification").textContent = responseConverted.identification;
@@ -146,6 +146,7 @@ function editar(usuario) {
     $("#cellphoneModal").val(usuario.cellPhone);
     $("#zonaModal").val(usuario.zone);
     $("#tipoModal").val(usuario.type);
+    $("#birthDayModal").val(usuario.birthtDay.substring(0, 10));
 
     document.getElementById('passwordModal').disabled = false;
     document.getElementById('emailModal').disabled = false;
@@ -171,8 +172,10 @@ async function actualizarCambios(event) {
     let $address = document.getElementById("addressModal").value;
     let $cellphone = document.getElementById("cellphoneModal").value;
     let correoRepetido = await verificarCorreo($email) && ($email != document.getElementById("hEmailModal").value);
+    let $birthtDay = document.getElementById("birthDayModal").value.trim();
+    let $month = $birthtDay.split('-')[1];
     if ($name.length <= 0 || $email.length <= 0 || $password.length <= 0 || $confirm.length <= 0
-        || $ident.length <= 0 || $address.length <= 0 || $cellphone.length <= 0) {
+        || $ident.length <= 0 || $address.length <= 0 || $cellphone.length <= 0 || $birthtDay <= 0 || $month <= 0) {
         mostrarMensaje("Todos los campos son obligatorios", "ADVERTENCIA");
     }
     else if ($password != $confirm) {
@@ -198,6 +201,8 @@ async function actualizarCambios(event) {
             const response = await fetch(url, fetchOptions).then(function () {
                 mostrarMensaje("Usuario Actualizado Exitosamente", "MENSAJE");
                 cerrarModal();
+                setTimeout(() => {
+                    window.location.reload();}, 1500);
             });
         }
         catch (error) {
@@ -238,6 +243,8 @@ function capturarDatosUsuario() {
         identification: document.getElementById("identModal").value.trim(),
         address: document.getElementById("addressModal").value.trim(),
         cellPhone: document.getElementById("cellphoneModal").value.trim(),
+        birthtDay: document.getElementById("birthDayModal").value.trim(),
+        monthBirthtDay: document.getElementById("birthDayModal").value.trim().split('-')[1],
         zone: document.getElementById("zonaModal").value.trim(),
         type: document.getElementById("tipoModal").value.trim()
     };
