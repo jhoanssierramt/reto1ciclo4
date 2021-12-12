@@ -17,6 +17,7 @@ window.onload = function () {
     document.getElementById("editarPerfil").addEventListener("click",actualizarCambios);
 
     document.getElementById("tablaCrearOrden").hidden = true;
+    document.getElementById("tablaListaPedidos").hidden = true;
     document.getElementById("botonAgregarItem").addEventListener("click", mostrarItemEnTabla);
     document.getElementById("botonCancelarAgregarItem").onclick = cerrarModalAgregarItem;
     document.getElementById("botonCancelar").onclick = cerrarModalMensaje;
@@ -74,10 +75,6 @@ window.onload = function () {
     }
 }
 
-
-function listaOrdenes(){
-    console.log("ESTA ES FUNC DE VER LISTA ORDENES");
-}
 /**
  * Trae los datos de inicio, 
  * se ven datos en la parte izquierda
