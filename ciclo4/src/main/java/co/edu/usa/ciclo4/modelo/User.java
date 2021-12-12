@@ -43,11 +43,11 @@ public class User {
      * campos añadidos para reto 3,
      * birthDay y monthBirthDay
      */
-    @NonNull
+    //@NonNull
     //@Field(name= "user_birthtDay")
     private String birthtDay;
 
-    @NonNull
+    //@NonNull
     //@Field(name= "user_monthBirthtDay")
     private String monthBirthtDay;
     
