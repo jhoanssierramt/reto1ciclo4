@@ -118,6 +118,7 @@ async function checkEmailAndPass(email, password) {
 
 var cerrarModal = function () {
   $('#modalRegistro').modal('hide');
+  borrarCampos();
   //document.getElementById('modalRegistro').style.display='none';
 }
 
@@ -146,8 +147,10 @@ async function guardarCambios(event) {
   let $ident = document.getElementById("identModal").value.trim();
   let $address = document.getElementById("addressModal").value.trim();
   let $cellphone = document.getElementById("cellphoneModal").value.trim();
+  let $birthtDay = document.getElementById("birthDayModal").value.trim();
+  let $month = $birthtDay.split('-')[1];
   if ($name.length <= 0 || $email.length <= 0 || $password.length <= 0 || $confirm.length <= 0 
-|| $ident.length <=0 || $address.length <=0 || $cellphone.length <=0){
+|| $ident.length <=0 || $address.length <=0 || $cellphone.length <=0 || $birthtDay<=0 || $month<=0){
     mostrarMensaje("Todos los campos son obligatorios", "ADVERTENCIA");
   }
   else if ($password != $confirm) {
@@ -216,6 +219,8 @@ function capturarDatosUsuario() {
     identification: document.getElementById("identModal").value,
     address: document.getElementById("addressModal").value,
     cellPhone: document.getElementById("cellphoneModal").value,
+    birthtDay: document.getElementById("birthDayModal").value.trim(),
+    monthBirthtDay: document.getElementById("birthDayModal").value.trim().split('-')[1],
     zone: "-",
     type: "ASE"
 
@@ -224,10 +229,7 @@ function capturarDatosUsuario() {
 }
 
 function borrarCampos() {
-  document.getElementById("emailModal").value = "";
-  document.getElementById("passwordModal").value = "";
-  document.getElementById("nameModal").value = "";
-  document.getElementById("confirmModal").value = "";
+  document.getElementById("formModalRegistro").reset();
 }
 
 function generarId(){

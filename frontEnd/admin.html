@@ -6,7 +6,7 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Admin</title>
-    <link rel="shortcut icon" type="image/jpg" href="./images/logo.png"/>
+    <link rel="shortcut icon" type="image/jpg" href="./images/logo.png" />
     <!--Imports-->
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css"
         integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
@@ -204,6 +204,10 @@
                                     autocomplete="off">
                             </div>
                             <div class="col-sm-12 col-lg-6">
+                                <label for="name" class="form-label">Fecha de nacimiento</label>
+                                <input type="date" class="form-control" id="birthDayModal" autocomplete="off">
+                            </div>
+                            <div class="col-sm-12 col-lg-6">
                                 <label for="name" class="form-label">Contraseña</label>
                                 <input type="password" class="form-control" id="passwordModal" placeholder="Contraseña"
                                     autocomplete="off">
@@ -230,8 +234,8 @@
         </div>
     </form>
     <!-- fin del modal de formulario -->
-     <!-- Modal para el formulario registrar Producto-->
-     <form>
+    <!-- Modal para el formulario registrar Producto-->
+    <form>
         <div class="modal fade" id="modalProducto" tabindex="-1" role="dialog">
             <div class="modal-dialog" role="document">
                 <div class="modal-content">
@@ -242,8 +246,8 @@
                         <div class="row">
                             <div class="col-sm-12 col-lg-6">
                                 <label for="modalRerenciaProd" class="form-label">Referencia</label>
-                                <input type="text" class="form-control" id="modalRerenciaProd" placeholder="referencia producto"
-                                    autocomplete="off">
+                                <input type="text" class="form-control" id="modalRerenciaProd"
+                                    placeholder="referencia producto" autocomplete="off">
                             </div>
                             <div class="col-sm-12 col-lg-6">
                                 <label for="modalMarcaProd" class="form-label">Marca</label>
@@ -282,23 +286,23 @@
                             </div>
                             <div class="col-sm-12 col-lg-6">
                                 <label for="modalPrecioProd" class="form-label">Precio</label>
-                                <input type="number" class="form-control" placeholder="precio"
-                                    id="modalPrecioProd" autocomplete="off">
+                                <input type="number" class="form-control" placeholder="precio" id="modalPrecioProd"
+                                    autocomplete="off">
                             </div>
                             <div class="col-sm-12 col-lg-6">
                                 <label for="modalCantidadProd" class="form-label">Cantidad</label>
-                                <input type="number" class="form-control" placeholder="cantidad"
-                                    id="modalCantidadProd" autocomplete="off">
+                                <input type="number" class="form-control" placeholder="cantidad" id="modalCantidadProd"
+                                    autocomplete="off">
                             </div>
                             <div class="col-sm-12 col-lg-6">
                                 <label for="modalImagenProd" class="form-label">URL Imagen</label>
                                 <input type="text" class="form-control" id="modalImagenProd" placeholder="URL"
-                                autocomplete="off">
+                                    autocomplete="off">
                             </div>
                             <div class="col-sm-12 col-lg-6">
                                 <label for="modalDescripcionProd" class="form-label">Descripcion</label>
-                                <textarea class="form-control" placeholder="descripcion" id="modalDescripcionProd" 
-                                rows="5" cols="20" maxlength="250" autocomplete="off">
+                                <textarea class="form-control" placeholder="descripcion" id="modalDescripcionProd"
+                                    rows="5" cols="20" maxlength="250" autocomplete="off">
                                 <!--Descripcion del producto-->
                                 </textarea>
                             </div>

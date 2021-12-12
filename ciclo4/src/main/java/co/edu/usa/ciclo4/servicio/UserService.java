@@ -93,6 +93,9 @@ public class UserService {
                 userNew.get().setZone(usuario.getZone());
 
                 userNew.get().setType(usuario.getType());
+                
+                userNew.get().setBirthtDay(usuario.getBirthtDay());
+                userNew.get().setMonthBirthtDay(usuario.getMonthBirthtDay());
 
                 metodosCrud.save(userNew.get());
                 return userNew.get();

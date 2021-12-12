@@ -11,6 +11,7 @@ package co.edu.usa.ciclo4.modelo;
  * @author Grupo G9 Cilco-4
  */
 
+import java.util.Date;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.Getter;
@@ -45,7 +46,7 @@ public class User {
      */
     //@NonNull
     //@Field(name= "user_birthtDay")
-    private String birthtDay;
+    private Date birthtDay;
 
     //@NonNull
     //@Field(name= "user_monthBirthtDay")
