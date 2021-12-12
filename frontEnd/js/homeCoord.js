@@ -2,6 +2,7 @@ async function listaOrdenes() {
     console.log("ESTA ES FUNC DE VER LISTA ORDENES");
     document.getElementById("tablaListaPedidos").hidden = false;
     await listaPedidosZona(datosAsesor.zone);
+    console.log('ZONA USER',datosAsesor.zone);
 }
 
 async function listaPedidosZona(zona) {
