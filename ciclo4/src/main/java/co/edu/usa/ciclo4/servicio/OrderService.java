@@ -8,6 +8,7 @@ import org.springframework.stereotype.Service;
 
 import co.edu.usa.ciclo4.modelo.Order;
 import co.edu.usa.ciclo4.repositorio.OrderRepository;
+import java.util.Date;
 
 /**
  *
@@ -64,8 +65,18 @@ public class OrderService {
 
     
     public boolean deleteOrder(Integer idOrden){
-
         return true;
-
+    }
+    
+    public List<Order> getOrderBySalesMan(Integer id){
+        return orderRepository.getOrderBySalesMan(id);
+    }
+    
+    public List<Order> getOrderByStatusAndBySalesMan(String status, Integer id){
+        return orderRepository.getOrderByStatusAndBySalesMan(status, id);
+    }
+    
+    public List<Order> getOrderByDateAndBySalesMan(Date date, Integer id){
+        return orderRepository.getOrderByDateAndBySalesMan(date, id);
     }
 }

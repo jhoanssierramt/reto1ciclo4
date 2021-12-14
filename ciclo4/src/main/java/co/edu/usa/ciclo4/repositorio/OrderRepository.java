@@ -11,6 +11,7 @@ import org.springframework.stereotype.Repository;
 
 import co.edu.usa.ciclo4.modelo.Order;
 import co.edu.usa.ciclo4.repositorio.crud.OrderCrudRepository;
+import java.util.Date;
 
 /**
  *
@@ -57,5 +58,27 @@ public class OrderRepository {
      */
     public void borrarOrden(Order orden){
         crudOrder.delete(orden);
+    }
+    
+    public List<Order> getOrderBySalesMan(Integer id){
+        //return crudOrder.getOrderBySalesMan(id);
+        Query query = new Query(); // Crear objeto de condición
+        query.addCriteria(Criteria.where("salesMan.id").is(id));
+        List<Order> listaOrder = mongoTemplate.find(query,Order.class);
+        return listaOrder;
+    }
+    
+    public List<Order> getOrderByStatusAndBySalesMan(String status, Integer id){
+        Query query = new Query(); // Crear objeto de condición
+        query.addCriteria(Criteria.where("salesMan.id").is(id).and("status").is(status));
+        List<Order> listaOrder = mongoTemplate.find(query,Order.class);
+        return listaOrder;
+    }
+    
+    public List<Order> getOrderByDateAndBySalesMan(Date date, Integer id){
+        Query query = new Query(); // Crear objeto de condición
+        query.addCriteria(Criteria.where("salesMan.id").is(id).and("registerDay").is(date));
+        List<Order> listaOrder = mongoTemplate.find(query,Order.class);
+        return listaOrder;
     }
 }
