@@ -87,23 +87,47 @@ public class UserController {
         return servicio.checkEmailAndPassw(email, password);
     }
     
+    /**
+     * Método para actualizar Usuario
+     *
+     * @param usuario
+     * @return Usuario y datos en formato JSON
+     */
     @PutMapping("/update")
     @ResponseStatus(HttpStatus.CREATED)
     public User update(@RequestBody User usuario) {
         return servicio.updateUser(usuario);
     }
     
+    /**
+     * Método para borrar Usuario
+     *
+     * @param userId
+     * @return true or false
+     */
     @DeleteMapping("/{id}")
     @ResponseStatus(HttpStatus.NO_CONTENT)
     public boolean delete(@PathVariable("id") Integer userId) {
         return servicio.deleteUser(userId);
     }
    
+    /**
+     * Método para consultar Usuario por ID
+     *
+     * @param id
+     * @return Usuario y datos en formato JSON
+     */
     @GetMapping("/{id}")
     public User getUserById(@PathVariable("id") Integer id) {
         return servicio.getUser(id).orElse(new User());
     }
     
+    /**
+     * Usuario coordinador en una zona determinada
+     *
+     * @param id
+     * @return true or false
+     */
     @GetMapping("/coordInZone/{zone}")
     public boolean coordInZone(@PathVariable("zone") String zone){
         List<User> usuariosZona = servicio.getUsersByZone(zone);
@@ -113,6 +137,21 @@ public class UserController {
             }
         }
         return false;
+    }
+    
+    /**
+     * Metodo encargado de retornar la orden que coincida con el id del Vendedor,
+     * que se envia en URL
+     * 
+     * @param mes
+     * @return Lista de usuarios
+     */
+    @GetMapping("/birthday/{mes}")
+    public List<User> getUsersByBirthday(@PathVariable("mes") String mes) {
+        System.out.println("Mes de cumpleaños: "+mes);
+        List<User> listaUsuarios = servicio.getUsersByBirthday(mes);
+        System.out.println(listaUsuarios.toString());
+        return listaUsuarios;
     }
 }
 

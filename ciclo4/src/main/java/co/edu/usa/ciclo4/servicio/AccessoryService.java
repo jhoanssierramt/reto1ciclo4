@@ -88,5 +88,13 @@ public class AccessoryService {
         }).orElse(false);
         return aBoolean;
     }
+    
+    public List<Accessory> getProductByPrice(Double price){
+        return metodosCrud.getProductByPrice(price);
+    }
+    
+    public List<Accessory> getProductsByDescription(String palabraClave){
+        return metodosCrud.getProductsByDescription(palabraClave);
+    }
 
 }
