@@ -1,8 +1,10 @@
 package co.edu.usa.ciclo4;
 
 import co.edu.usa.ciclo4.modelo.Accessory;
+import co.edu.usa.ciclo4.modelo.Order;
 import co.edu.usa.ciclo4.modelo.User;
 import co.edu.usa.ciclo4.repositorio.AccessoryRepository;
+import co.edu.usa.ciclo4.repositorio.OrderRepository;
 import co.edu.usa.ciclo4.repositorio.UserRepository;
 import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -20,6 +22,8 @@ public class Ciclo4Application {
     private UserRepository repoUser;
     @Autowired
     private AccessoryRepository repoAccessory;
+    @Autowired
+    private OrderRepository repoOrder;
 
     public static void main(String[] args) {
         SpringApplication.run(Ciclo4Application.class, args);
@@ -33,6 +37,9 @@ public class Ciclo4Application {
 
             List<Accessory> listaAccesorios = repoAccessory.getAll();
             System.out.println("Accesories: " + listaAccesorios.size());
+            
+            List<Order> listaOrden = repoOrder.traerOrdenes();
+            System.out.println("Orders: " + listaOrden.size());
         };
     }
 }

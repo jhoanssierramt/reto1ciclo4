@@ -11,6 +11,8 @@ import org.springframework.web.bind.annotation.RestController;
 
 import co.edu.usa.ciclo4.modelo.Order;
 import co.edu.usa.ciclo4.servicio.OrderService;
+import java.text.SimpleDateFormat;
+import java.util.Date;
 
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.DeleteMapping;
@@ -106,4 +108,60 @@ public class OrderController {
         return orderService.deleteOrder(idOrden);
     }
     
+    /**
+     * Metodo encargado de retornar la orden que coincida con el id del Vendedor,
+     * que se envia en URL
+     * 
+     * @param id
+     * @return
+     */
+    @GetMapping("/salesman/{id}")
+    public List<Order> getOrderBySalesMan(@PathVariable("id") Integer id) {
+        System.out.println("Salesman ID: "+id);
+        List<Order> listaOrdenes = orderService.getOrderBySalesMan(id);
+        System.out.println(listaOrdenes.toString());
+        return listaOrdenes;
+    }
+    
+    /**
+     * Metodo encargado de retornar ordenes pendientes que coincidan con el id del Vendedor,
+     * que se envia en URL
+     * 
+     * @param id
+     * @return
+     */
+    @GetMapping("/state/{status}/{id}")
+    public List<Order> getOrderByStatusAndBySalesMan(@PathVariable("status") String status, @PathVariable("id") Integer id) {
+        System.out.println("Salesman ID: "+id);
+        System.out.println("Status: "+status);
+        List<Order> listaOrdenes = orderService.getOrderByStatusAndBySalesMan(status, id);
+        System.out.println(listaOrdenes.toString());
+        return listaOrdenes;
+    }
+    
+    /**
+     * Metodo encargado de retornar ordenes en una fecha determina que coincidan 
+     * con el id del Vendedor,
+     * que se envia en URL
+     * 
+     * @param id
+     * @param date
+     * @return
+     */
+    @GetMapping("/date/{date}/{id}")
+    public List<Order> getOrderByDateAndBySalesMan(@PathVariable("date") String date, @PathVariable("id") Integer id) {
+        try{
+            Date date1=new SimpleDateFormat("yyyy-MM-dd").parse(date);
+            
+            System.out.println("Salesman ID: "+id);
+            System.out.println("registerDay: "+date);
+            List<Order> listaOrdenes = orderService.getOrderByDateAndBySalesMan(date1, id);
+            System.out.println(listaOrdenes.toString());
+            return listaOrdenes;
+        }
+        catch(Exception e){
+            System.out.println("Error convirtiendo la fecha: "+e);
+            return null;
+        }
+    }
 }
