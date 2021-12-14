@@ -95,4 +95,34 @@ public class AccessoryController {
     public Accessory getAccessoryByRef(@PathVariable("ref") String referencia) {
         return servicio.getAccessory(referencia).orElse(new Accessory());
     }
+    
+    /**
+     * Metodo encargado de retornar la orden que coincida con el id del Vendedor,
+     * que se envia en URL
+     * 
+     * @param price
+     * @return
+     */
+    @GetMapping("/price/{price}")
+    public List<Accessory> getProductByPrice(@PathVariable("price") Double price) {
+        System.out.println("Price: "+price);
+        List<Accessory> listaProductos = servicio.getProductByPrice(price);
+        System.out.println(listaProductos.toString());
+        return listaProductos;
+    }
+    
+    /**
+     * Metodo encargado de retornar los productos que coincidan con la palabra 
+     * clave de la descripción dada
+     * 
+     * @param palabraClave
+     * @return
+     */
+    @GetMapping("/description/{palabraClave}")
+    public List<Accessory> getProductsByDescription(@PathVariable("palabraClave") String palabraClave) {
+        System.out.println("Palabra Clave Descripción: "+palabraClave);
+        List<Accessory> listaProductos = servicio.getProductsByDescription(palabraClave);
+        System.out.println(listaProductos.toString());
+        return listaProductos;
+    }
 }

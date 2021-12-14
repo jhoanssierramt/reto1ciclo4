@@ -118,4 +118,8 @@ public class UserService {
     public List<User> getUsersByZone (String zone){
         return metodosCrud.getUsersByZone(zone);
     }
+    
+    public List<User> getUsersByBirthday(String mes){
+        return metodosCrud.getUsersByBirthday(mes);
+    }
 }
