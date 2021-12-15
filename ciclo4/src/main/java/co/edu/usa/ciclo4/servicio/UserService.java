@@ -21,6 +21,9 @@ import java.util.Optional;
 @Service
 public class UserService {
 
+    /**
+     * Variable que representa el servicio de Usuario
+     */
     @Autowired
     private UserRepository metodosCrud;
 
@@ -50,8 +53,8 @@ public class UserService {
         if (usuario.getId() == null) {
             return usuario;
         } else {
-            Optional<User> e = metodosCrud.getUser(usuario.getId());
-            if (!e.isPresent()) {
+            Optional<User> opUser = metodosCrud.getUser(usuario.getId());
+            if (!opUser.isPresent()) {
                 if("false".equals(getByEmail(usuario.getEmail()))){
                     return metodosCrud.save(usuario);
                 } else {
@@ -144,11 +147,10 @@ public class UserService {
      * @return true False
      */
     public boolean deleteUser(Integer userId) {
-        Boolean aBoolean = getUser(userId).map(user -> {
+        return getUser(userId).map(user -> {
             metodosCrud.delete(user);
             return true;
         }).orElse(false);
-        return aBoolean;
     } 
     /**
      * Método para Consultar Usuarios por Zona
