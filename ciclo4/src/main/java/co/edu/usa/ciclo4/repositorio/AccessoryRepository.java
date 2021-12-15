@@ -63,9 +63,9 @@ public class AccessoryRepository {
      * @return lista de productos
      */
     public List<Accessory> getProductsByDescription(String palabraClave){
-        
+        //"\W*((?i)"+palabraClave+"(?-i))\W*"
         Query query = new Query(); // Crear objeto de condición
-        query.addCriteria(Criteria.where("description").regex(".*\\b"+palabraClave+"\\b.*"));
+        query.addCriteria(Criteria.where("description").regex(".*\\b"+palabraClave+"\\b.*","i"));
         List<Accessory> listaAccesorio = mongoTemplate.find(query,Accessory.class);
         return listaAccesorio;
     }
