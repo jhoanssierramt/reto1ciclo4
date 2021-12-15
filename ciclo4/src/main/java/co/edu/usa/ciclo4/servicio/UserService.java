@@ -13,8 +13,10 @@ import java.util.List;
 import java.util.Optional;
 
 /**
- *
- * @author HeerJHobby
+ * Clase Controller User
+ * Grupo G9 - G2
+ * @version 4.0
+ * @author Sierra Rojas Trejos Garcia Herrera
  */
 @Service
 public class UserService {
@@ -22,14 +24,28 @@ public class UserService {
     @Autowired
     private UserRepository metodosCrud;
 
+    /**
+     * Método para Consultar Lista de Usuarios
+     *
+     * @return LIsta Usuarios
+     */
     public List<User> getAll() {
         return metodosCrud.getAll();
     }
 
+    /**
+     * Método para Consultar Usuario por Id
+     *
+     * @return Id Usuario
+     */
     public Optional<User> getUser(Integer usuarioId) {
         return metodosCrud.getUser(usuarioId);
     }
-
+    /**
+     * Método para Guardar un Usuario
+     *
+     * @return Usuario
+     */
     public User save(User usuario) {
         if (usuario.getId() == null) {
             return usuario;
@@ -46,8 +62,13 @@ public class UserService {
             }
 
         }
-        //return metodosCrud.save(usuario);
+      
     }
+    /**
+     * Método para Consultar por correo
+     *
+     * @return correo
+     */
 
     public String getByEmail(String correo) {
         String aux = metodosCrud.getByEmail(correo);
@@ -57,6 +78,12 @@ public class UserService {
             return "true";
         }
     }
+
+    /**
+     * Método para Consultar Usuario por correo y password
+     *
+     * @return Nuevo Usuario
+     */
 
     public User checkEmailAndPassw(String email, String password) {
 
@@ -71,12 +98,17 @@ public class UserService {
 
     }
 
+    /**
+     * Método para Actualizar Usuario
+     *
+     * @return Usuario
+     */
+
     public User updateUser(User usuario) {
         if (usuario.getId() != null) {
             Optional<User> userNew = metodosCrud.getUser(usuario.getId());
             if (userNew.isPresent()) {
                 // Al usar la Anotacion @NotNull no es necesario hacer estas validaciones
-
                 // if (usuario.getIdentification() != null) 
                 userNew.get().setIdentification(usuario.getIdentification());
                 
@@ -106,7 +138,11 @@ public class UserService {
             return usuario;
         }
     }
-    
+    /**
+     * Método para Borrar Usuario 
+     *
+     * @return true False
+     */
     public boolean deleteUser(Integer userId) {
         Boolean aBoolean = getUser(userId).map(user -> {
             metodosCrud.delete(user);
@@ -114,11 +150,20 @@ public class UserService {
         }).orElse(false);
         return aBoolean;
     } 
+    /**
+     * Método para Consultar Usuarios por Zona
+     *
+     * @return Usuarios por zona
+     */
     
     public List<User> getUsersByZone (String zone){
         return metodosCrud.getUsersByZone(zone);
     }
-    
+    /**
+     * Método para Consultar usuario por Fecha de Cumpleaños
+     *
+     * @return Mes de cumpleaños
+     */
     public List<User> getUsersByBirthday(String mes){
         return metodosCrud.getUsersByBirthday(mes);
     }
