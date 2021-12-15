@@ -13,6 +13,7 @@ import co.edu.usa.ciclo4.modelo.Order;
 import co.edu.usa.ciclo4.servicio.OrderService;
 import java.text.SimpleDateFormat;
 import java.util.Date;
+import java.util.TimeZone;
 
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.DeleteMapping;
@@ -151,12 +152,15 @@ public class OrderController {
     @GetMapping("/date/{date}/{id}")
     public List<Order> getOrderByDateAndBySalesMan(@PathVariable("date") String date, @PathVariable("id") Integer id) {
         try{
-            Date date1=new SimpleDateFormat("yyyy-MM-dd").parse(date);
+            SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
+            sdf.setTimeZone(TimeZone.getTimeZone("America/Bogota"));
+            //System.out.println("Por defecto"+ TimeZone.getDefault());
+            Date dateConverted = sdf.parse(date);
             
             System.out.println("Salesman ID: "+id);
-            System.out.println("registerDay: "+date);
-            List<Order> listaOrdenes = orderService.getOrderByDateAndBySalesMan(date1, id);
-            System.out.println(listaOrdenes.toString());
+            System.out.println("registerDay: "+dateConverted);
+            List<Order> listaOrdenes = orderService.getOrderByDateAndBySalesMan(dateConverted, id);
+            //System.out.println(listaOrdenes.toString());
             return listaOrdenes;
         }
         catch(Exception e){
