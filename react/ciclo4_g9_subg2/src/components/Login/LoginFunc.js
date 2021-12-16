@@ -1,11 +1,15 @@
+import "./login.css";
 import { useEffect, useState } from "react";
-import { Form, Button } from "react-bootstrap";
+import { Form, Button, CardGroup, Card } from "react-bootstrap";
 import { useApp } from "../../context/GlobalSession";
+import { Products } from "../products/Products";
 const serverUrl = "http://localhost:8080/";
+let isClient = false;
 
 const LoginFunc = ({ userData }) => {
   const { isLoged, setIsLoged } = useApp();
   const { user, setUser } = useApp();
+  const [client, setClient] = useState("false");
 
   const [username, setUserName] = useState("");
   const [password, setPassword] = useState("");
@@ -17,38 +21,40 @@ const LoginFunc = ({ userData }) => {
     // console.log(`hola`);
     console.log(`username`, username);
     if (localStorage.getItem("isLoged") === "true") {
-      setIsLoged(true);
+      setIsLoged(true);      
       setUser(JSON.parse(localStorage.getItem("logedUser")));
+      
     }
+    //setClient("false");
+    isClient = false;
+
   });
+
+  const verCatalogo = () =>{
+    setClient("true");
+    alert("Entrando a catálogo de productos");
+  };
 
   const handleSubmit = async (event) => {
     event.preventDefault();
     try {
       console.log(`this.state`, username);
       console.log(`this.state`, password);
-      // if (username === "usuario@correo.com" && password === "123") {
-      //   const jsonData = { name: "juan", lastname: "perez", id: 1 };
-      //   setIsLoged(true);
-      //   setUser(jsonData);
-      //   localStorage.setItem("isLoged", true);
-      //   localStorage.setItem("logedUser", JSON.stringify(jsonData));
-      // }
 
       let response = await fetch(`${serverUrl}api/user/${username}/${password}`);
       response = await response.json();
       if (response.id) {
-      
-      const jsonData = { name: response.name, id: response.id };
-      setIsLoged(true);
-      setUser(jsonData);
-      localStorage.setItem("isLoged", true);
-      localStorage.setItem("logedUser", JSON.stringify(jsonData));
-      
+
+        const jsonData = { name: response.name, id: response.id };
+        setIsLoged(true);
+        setUser(jsonData);
+        localStorage.setItem("isLoged", true);
+        localStorage.setItem("logedUser", JSON.stringify(jsonData));
+
         alert("Bienvenido");
 
       }
-      else{alert("Usuario no encontrado")}
+      else { alert("Usuario no encontrado") }
 
     } catch (error) {
       console.log(`error`, error);
@@ -57,53 +63,64 @@ const LoginFunc = ({ userData }) => {
 
   return (
     <div>
-      {isLoged === false ? (
-        <Form onSubmit={handleSubmit}>
-          <Form.Group className="mb-3" controlId="formBasicEmail">
-            <Form.Label>Email address</Form.Label>
-            <Form.Control
-              type="email"
-              onKeyUp={(event) => setUserName(event.target.value)}
-              defaultValue={username}
-              placeholder="Enter email"
-            />
-            <Form.Text className="text-muted">
-              We'll never share your email with anyone else.
-            </Form.Text>
-          </Form.Group>
+      {isLoged === false && client === "false" ? (
+        <CardGroup className="row justify-content-center">
+          <Card style={{ maxWidth: '25rem' }}>            
+            <Card.Body>
+              <Card.Title>Calzado Saylor Moon</Card.Title>
+              
+              <Form onSubmit={handleSubmit}>
+                <Form.Group className="mb-3" controlId="formBasicEmail">
+                  <Form.Label>Correo Electrónico</Form.Label>
+                  <Form.Control
+                    type="email"
+                    onKeyUp={(event) => setUserName(event.target.value)}
+                    defaultValue={username}
+                    placeholder="Ingrese Correo Electrónico"
+                  />
+                </Form.Group>
 
-          <Form.Group className="mb-3" controlId="formBasicPassword">
-            <Form.Label>Password</Form.Label>
-            <Form.Control
-              type="password"
-              placeholder="Password"
-              onKeyUp={(event) => setPassword(event.target.value)}
-              defaultValue={password}
-            />
-          </Form.Group>
-          {/* <Form.Group className="mb-3" controlId="formBasicCheckbox">
-            <label>Cual es su rol </label>
-            <Form.Select onChange={(event) => setRol(event.target.value)}>
-              <option selected disabled>
-                Seleccione...
-              </option>
-              <option>Asesor</option>
-              <option>Coordinador</option>
-              <option>Administrador</option>
-            </Form.Select>
-          </Form.Group> */}
-          <Button variant="primary" type="submit">
-            Iniciar Sesión
-          </Button>
-        </Form>
+                <Form.Group className="mb-3" controlId="formBasicPassword">
+                  <Form.Label>Contraseña</Form.Label>
+                  <Form.Control
+                    type="password"
+                    placeholder="Ingrese Contraseña"
+                    onKeyUp={(event) => setPassword(event.target.value)}
+                    defaultValue={password}
+                  />
+                </Form.Group>
+                  <Button variant="primary" type="submit">
+                    Iniciar Sesión
+                  </Button>
+              </Form>
+            </Card.Body>
+            <Card.Footer>
+              <small className="text-muted">Protegemos tus datos personales.</small>
+            </Card.Footer>
+          </Card>
+
+          <Card style={{ maxWidth: '20rem' }}>
+            <Card.Img variant="top" src="../../../images/Logo.png"/>
+            <Card.Body>
+              <Card.Text>Visita nuestro catálogo en línea</Card.Text>
+              <Button variant="primary" onClick={verCatalogo}>
+                    Ver productos
+                  </Button>
+            </Card.Body>
+            <Card.Footer>
+              <small className="text-muted">Área de Clientes</small>
+            </Card.Footer>
+          </Card>
+        </CardGroup>
       ) : (
-        <h1>Bienvenido {name}</h1>
+        
+          <div>
+            <div id="volverProducto">
+            <a onClick={() => setClient("false")} href="#"> Volver</a>             
+            </div>
+            <Products />
+          </div>                
       )}
-
-      {/* <form className="row">
-            <input className="form-control" name="username" type="email" />
-            <input className="form-control" name="password" type="password" />
-        </form> */}
     </div>
   );
 };

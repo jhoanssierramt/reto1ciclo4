@@ -5,6 +5,7 @@ import { useApp } from "../../context/GlobalSession";
 import LoginFunc from "../Login/LoginFunc";
 import { Orders } from "../orders/Orders";
 import { Birthday } from "../birthday/Birthday";
+import { Products } from "../products/Products"
 
 export const Home = () => {
   const { isLoged, setIsLoged } = useApp();
@@ -36,7 +37,7 @@ export const Home = () => {
               <Birthday />
             </Tab>
             <Tab eventKey="products" title="Productos">
-              <Orders />
+              <Products />
             </Tab>
           </Tabs>
 
