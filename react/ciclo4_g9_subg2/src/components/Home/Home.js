@@ -25,9 +25,9 @@ export const Home = () => {
             </h6>
             <a onClick={logout} href="#">
               Cerrar sesión
-            </a>
+            </a>            
           </div> 
-
+          <br/>
           <Tabs defaultActiveKey="profile" id="uncontrolled-tab-example" className="mb-3"
                 activeKey={key} onSelect={(k) => setKey(k)}>
             <Tab eventKey="orders" title="Órdenes">
