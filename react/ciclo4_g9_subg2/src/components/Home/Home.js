@@ -1,29 +1,50 @@
-import { useEffect } from "react";
+import "./home.css";
+import { useEffect,useState } from "react";
+import { Tabs, Tab } from "react-bootstrap";
 import { useApp } from "../../context/GlobalSession";
 import LoginFunc from "../Login/LoginFunc";
 import { Orders } from "../orders/Orders";
+import { Birthday } from "../birthday/Birthday";
 
 export const Home = () => {
   const { isLoged, setIsLoged } = useApp();
   const { user, setUser } = useApp();
   const { logout } = useApp();
+  const [key, setKey] = useState('orders');
 
   useEffect(() => {});
 
   return (
     <div>
-      <p>
-        Bienvenido {user.name} {user.lastname}
-      </p>
-
       {isLoged ? (
         <div>
-          <a onClick={logout} href="#">
-            Cerrar sesión
-          </a>
-          <Orders />
+          <div className="izq">
+            <h6>
+              Bienvenido {user.name} {user.lastname}
+            </h6>
+            <a onClick={logout} href="#">
+              Cerrar sesión
+            </a>
+          </div> 
+
+          <Tabs defaultActiveKey="profile" id="uncontrolled-tab-example" className="mb-3"
+                activeKey={key} onSelect={(k) => setKey(k)}>
+            <Tab eventKey="orders" title="Órdenes">
+              <Orders />
+            </Tab>
+            <Tab eventKey="birthday" title="Cumpleaños">
+              <Birthday />
+            </Tab>
+            <Tab eventKey="products" title="Productos">
+              <Orders />
+            </Tab>
+          </Tabs>
+
+            
+         
+                    
         </div>
-      ) : (
+        ) : (
         <LoginFunc />
       )}
     </div>
