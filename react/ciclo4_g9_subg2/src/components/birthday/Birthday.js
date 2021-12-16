@@ -7,11 +7,30 @@ const serverUrl = "http://localhost:8080/";
 export const Birthday = () => {
 
     const headers = ["Identificación", "Nombre", "Fecha Nacimiento", "Correo", "Teléfono", "Dirección", "Zona", "Tipo"];
-    const [month, setMonth] = useState("01");
+    const [month, setMonth] = useState("");
     const [body, setBody] = useState();
 
-    const buscarCumple = async (mes) => {
+    const buscarCumple = async () => {
         console.log("Mes Seleccionado: ",month);
+        if(month != "")
+        {
+            try {
+                const url = `${serverUrl}api/user/birthday/${month}`;
+                let response = await fetch(url);
+                response = await response.json();
+                setBody(response);
+                console.log("Response:",response.length);
+                if(response.length == 0)
+                {
+                    alert("No hay cumpleañeros este mes 😢");
+                }
+              } catch (error) {
+                console.log(`error`, error);
+              }
+        }
+        else{
+            alert("Por favor selecciones un mes!");
+        }        
     };
 
 
@@ -26,7 +45,7 @@ export const Birthday = () => {
                         <div className="card-body">
                             <h5 className="card-title">Selecciona el mes a consultar!</h5>
 
-                            <select className="form-control"defaultValue={"Seleccione..."}>
+                            <select className="form-control"defaultValue={"Seleccione..."} onChange={(event) => setMonth(event.target.value)}>
                                 <option disabled>Seleccione...</option>
                                 <option value="01" >Enero</option>
                                 <option value="02">Febrero</option>
@@ -44,7 +63,7 @@ export const Birthday = () => {
                             </select>
                             <br/>
                             <button className="btn btn-info btn-lg"
-                            onClick={() => buscarCumple(month)}>
+                            onClick={() => buscarCumple()}>
                                 Encontrar cumpleañeros!
                             </button>
                         </div>
@@ -69,7 +88,7 @@ export const Birthday = () => {
                         <tr key={row.id}>
                         <td>{row.identification}</td>
                         <td>{row.name}</td>
-                        <td>{moment(row.birthtDay).format("DD-MM-YYYY hh:mm")}</td>
+                        <td>{moment(row.birthtDay).format("DD-MM-YYYY")}</td>
                         <td>{row.email}</td>
                         <td>{row.cellPhone}</td>
                         <td>{row.address}</td>
