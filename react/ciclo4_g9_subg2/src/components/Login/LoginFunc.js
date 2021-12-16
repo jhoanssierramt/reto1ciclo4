@@ -93,7 +93,7 @@ const LoginFunc = ({ userData }) => {
             </Form.Select>
           </Form.Group> */}
           <Button variant="primary" type="submit">
-            Submit
+            Iniciar Sesión
           </Button>
         </Form>
       ) : (
