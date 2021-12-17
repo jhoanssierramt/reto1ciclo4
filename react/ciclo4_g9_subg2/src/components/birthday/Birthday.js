@@ -1,36 +1,66 @@
 import { useEffect, useState } from "react";
 import { Table } from "react-bootstrap";
 import * as moment from "moment";
+import ReactModal from "react-modal";
+import { UserEdit } from "../userEdit/UserEdit";
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
+import { faUserEdit } from '@fortawesome/free-solid-svg-icons'
 
 const serverUrl = "http://localhost:8080/";
+ReactModal.setAppElement('body');
 
 export const Birthday = () => {
 
-    const headers = ["Identificación", "Nombre", "Fecha Nacimiento", "Correo", "Teléfono", "Dirección", "Zona", "Tipo"];
+    const headers = ["Identificación", "Nombre", "Fecha Nacimiento", "Correo", "Teléfono", "Dirección", "Zona", "Tipo", "Editar"];
     const [month, setMonth] = useState("");
     const [body, setBody] = useState();
+    const [userId, setUserId] = useState(0);
+    const [showModal, setShowModal] = useState(false);
+
+    useEffect(() => {
+        getData();
+    }, []);
+
+    function handleOpenModal(id) {
+        setUserId(id);
+        setShowModal(true);
+    }
+    function handleCloseModal() {
+        setShowModal(false);
+        getData();
+    }
+
+    const getData = async () => {
+        try {
+            const url = `${serverUrl}/api/user/all`;
+            let response = await fetch(url);
+            response = await response.json();
+            console.log(`response`, response);
+            setBody(response);
+        } catch (error) {
+            console.log(`error`, error);
+        }
+    };
 
     const buscarCumple = async () => {
-        console.log("Mes Seleccionado: ",month);
-        if(month != "")
-        {
+        console.log("Mes Seleccionado: ", month);
+        if (month !== "") {
             try {
                 const url = `${serverUrl}api/user/birthday/${month}`;
                 let response = await fetch(url);
                 response = await response.json();
                 setBody(response);
-                console.log("Response:",response.length);
-                if(response.length == 0)
-                {
+                console.log("Response:", response.length);
+                if (response.length === 0) {
                     alert("No hay cumpleañeros este mes 😢");
                 }
-              } catch (error) {
+            } catch (error) {
                 console.log(`error`, error);
-              }
+            }
         }
-        else{
+        else {
             alert("Por favor selecciones un mes!");
-        }        
+        }
     };
 
 
@@ -45,7 +75,7 @@ export const Birthday = () => {
                         <div className="card-body">
                             <h5 className="card-title">Selecciona el mes a consultar!</h5>
 
-                            <select className="form-control"defaultValue={"Seleccione..."} onChange={(event) => setMonth(event.target.value)}>
+                            <select className="form-control" defaultValue={"Seleccione..."} onChange={(event) => setMonth(event.target.value)}>
                                 <option disabled>Seleccione...</option>
                                 <option value="01" >Enero</option>
                                 <option value="02">Febrero</option>
@@ -59,11 +89,11 @@ export const Birthday = () => {
                                 <option value="10">Octubre</option>
                                 <option value="11">Noviembre</option>
                                 <option value="12">Diciembre</option>
-                                
+
                             </select>
-                            <br/>
+                            <br />
                             <button className="btn btn-info btn-lg"
-                            onClick={() => buscarCumple()}>
+                                onClick={() => buscarCumple()}>
                                 Encontrar cumpleañeros!
                             </button>
                         </div>
@@ -74,34 +104,43 @@ export const Birthday = () => {
 
             <div className="col">
                 <Table responsive className="cumpleTable">
-                <thead>
-                    <tr>
-                    {headers.map((column) => (
-                        <th key={column}>{column}</th>
-                    ))}
-                    </tr>
-                </thead>
-                <tbody>
-                    {body &&
-                    body.length > 0 &&
-                    body.map((row) => (
-                        <tr key={row.id}>
-                        <td>{row.identification}</td>
-                        <td>{row.name}</td>
-                        <td>{moment(row.birthtDay).format("DD-MM-YYYY")}</td>
-                        <td>{row.email}</td>
-                        <td>{row.cellPhone}</td>
-                        <td>{row.address}</td>
-                        <td>{row.zone}</td>
-                        <td>{row.type}</td>
-                        
+                    <thead>
+                        <tr>
+                            {headers.map((column) => (
+                                <th key={column}>{column}</th>
+                            ))}
                         </tr>
-                    ))}
-                </tbody>
+                    </thead>
+                    <tbody>
+                        {body &&
+                            body.length > 0 &&
+                            body.map((row) => (
+                                <tr key={row.id}>
+                                    <td>{row.identification}</td>
+                                    <td>{row.name}</td>
+                                    <td>{moment(row.birthtDay).format("DD-MM-YYYY")}</td>
+                                    <td>{row.email}</td>
+                                    <td>{row.cellPhone}</td>
+                                    <td>{row.address}</td>
+                                    <td>{row.zone}</td>
+                                    <td>{row.type}</td>
+                                    <td><button
+                                        className="btn btn-info"
+                                        onClick={() => handleOpenModal(row.id)}
+                                    > <FontAwesomeIcon icon={faUserEdit} /> </button>
+                                    </td>
+                                </tr>
+                            ))}
+                    </tbody>
                 </Table>
+                <button className="btn btn-success btn-lg" onClick={getData}>
+                    Mostrar Toda la Lista.
+                </button>
             </div>
-            
-            
+            <ReactModal isOpen={showModal} contentLabel="Minimal Modal Example">
+                <button className="btn btn-danger" onClick={handleCloseModal}>Cerrar</button>
+                <UserEdit userId={userId} />
+            </ReactModal>
         </div>
     );
 };

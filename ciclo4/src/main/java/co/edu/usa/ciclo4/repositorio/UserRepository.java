@@ -16,48 +16,99 @@ import org.springframework.data.mongodb.core.query.Query;
 import org.springframework.stereotype.Repository;
 
 /**
+ * Clase Controller User Grupo G9 - G2
  *
- * @author Grupo G9 Cilco-4
+ * @version 4.0
+ * @author Sierra Rojas Trejos Garcia Herrera
  */
 @Repository
 public class UserRepository {
 
+    /**
+     * Variable que representa el repo-CRUD de Usuario
+     */
     @Autowired
     private UserCrudRepository crud;
+    /**
+     * Variable que representa el template de mongoDB
+     */
     @Autowired
     private MongoTemplate mongoTemplate;
 
+    /**
+     * Método para Consultar Lista de Usuarios
+     *
+     * @return LIsta Usuarios
+     */
     public List<User> getAll() {
         return (List<User>) crud.findAll();
     }
 
+    /**
+     * Método para Consultar Usuario por Id
+     *
+     * @param id
+     * @return Id Usuario
+     */
     public Optional<User> getUser(Integer id) {
         return crud.findById(id);
     }
 
+    /**
+     * Método para Guardar un Usuario
+     *
+     * @param usuario
+     * @return Usuario
+     */
     public User save(User usuario) {
         return crud.save(usuario);
     }
 
+    /**
+     * Método para Consultar por correo
+     *
+     * @param correo
+     * @return correo
+     */
     public String getByEmail(String correo) {
         return crud.getUserByEmail(correo);
     }
 
+    /**
+     * Método para Consultar Usuario por correo y password
+     *
+     * @param email
+     * @param password
+     * @return Nuevo Usuario
+     */
     public Optional<User> checkEmailAndPassw(String email, String password) {
         return crud.getUserByEmailAndPassword(email, password);
     }
-    public void delete(User user){
+
+    public void delete(User user) {
         crud.delete(user);
     }
-    
-    public List<User> getUsersByZone(String zone){
+
+    /**
+     * Método para Consultar Usuarios por Zona
+     *
+     * @param zone
+     * @return Usuarios por zona
+     */
+    public List<User> getUsersByZone(String zone) {
         return crud.getUsersByZone(zone);
     }
-    
-    public List<User> getUsersByBirthday(String mes){
+
+    /**
+     * Método para Consultar usuario por Fecha de Cumpleaños
+     *
+     * @param mes
+     * @return Mes de cumpleaños
+     */
+    public List<User> getUsersByBirthday(String mes) {
         Query query = new Query(); // Crear objeto de condición
         query.addCriteria(Criteria.where("monthBirthtDay").is(mes));
-        List<User> ls = mongoTemplate.find(query,User.class);
+        List<User> ls = mongoTemplate.find(query, User.class);
         return ls;
     }
 }

@@ -49,10 +49,13 @@ public class AccessoryRepository {
     
     public List<Accessory> getProductByPrice(Double price){
         //return crudOrder.getOrderBySalesMan(id);
+        /*
         Query query = new Query(); // Crear objeto de condición
         query.addCriteria(Criteria.where("price").is(price));
         List<Accessory> listaAccesorio = mongoTemplate.find(query,Accessory.class);
         return listaAccesorio;
+        */
+        return crud.getAccessoryByPrice(price);
     }
     
     /**
