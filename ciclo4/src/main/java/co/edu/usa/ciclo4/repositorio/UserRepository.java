@@ -47,11 +47,11 @@ public class UserRepository {
     /**
      * Método para Consultar Usuario por Id
      *
-     * @param id
+     * @param idUser
      * @return Id Usuario
      */
-    public Optional<User> getUser(Integer id) {
-        return crud.findById(id);
+    public Optional<User> getUser(Integer idUser) {
+        return crud.findById(idUser);
     }
 
     /**
@@ -85,6 +85,11 @@ public class UserRepository {
         return crud.getUserByEmailAndPassword(email, password);
     }
 
+    /**
+     * Método para Borrar Usuario
+     *
+     * @param user
+     */
     public void delete(User user) {
         crud.delete(user);
     }
@@ -102,13 +107,12 @@ public class UserRepository {
     /**
      * Método para Consultar usuario por Fecha de Cumpleaños
      *
-     * @param mes
+     * @param monthBirth
      * @return Mes de cumpleaños
      */
-    public List<User> getUsersByBirthday(String mes) {
+    public List<User> getUsersByBirthday(String monthBirth) {
         Query query = new Query(); // Crear objeto de condición
-        query.addCriteria(Criteria.where("monthBirthtDay").is(mes));
-        List<User> ls = mongoTemplate.find(query, User.class);
-        return ls;
+        query.addCriteria(Criteria.where("monthBirthtDay").is(monthBirth));
+        return mongoTemplate.find(query, User.class);
     }
 }
