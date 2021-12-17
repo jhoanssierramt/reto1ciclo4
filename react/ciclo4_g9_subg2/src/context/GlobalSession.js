@@ -2,7 +2,7 @@ import React, { useContext, useState } from "react";
 
 const SessionContext = React.createContext();
 export const SessionProvider = ({ children }) => {
-  const [user, setUser] = useState({ name: "", lastname: "", id: "" });
+  const [user, setUser] = useState({});
   const [isLoged, setIsLoged] = useState(false);
 
   const logout = () => {

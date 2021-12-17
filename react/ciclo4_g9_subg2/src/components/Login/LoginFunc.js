@@ -21,16 +21,16 @@ const LoginFunc = ({ userData }) => {
     // console.log(`hola`);
     console.log(`username`, username);
     if (localStorage.getItem("isLoged") === "true") {
-      setIsLoged(true);      
+      setIsLoged(true);
       setUser(JSON.parse(localStorage.getItem("logedUser")));
-      
+
     }
     //setClient("false");
     isClient = false;
 
   });
 
-  const verCatalogo = () =>{
+  const verCatalogo = () => {
     setClient("true");
     alert("Entrando a catálogo de productos");
   };
@@ -45,7 +45,7 @@ const LoginFunc = ({ userData }) => {
       response = await response.json();
       if (response.id) {
 
-        const jsonData = { name: response.name, id: response.id };
+        const jsonData = response;
         setIsLoged(true);
         setUser(jsonData);
         localStorage.setItem("isLoged", true);
@@ -65,10 +65,10 @@ const LoginFunc = ({ userData }) => {
     <div>
       {isLoged === false && client === "false" ? (
         <CardGroup className="row justify-content-center">
-          <Card style={{ maxWidth: '25rem' }}>            
+          <Card style={{ maxWidth: '25rem' }}>
             <Card.Body>
               <Card.Title>Calzado Saylor Moon</Card.Title>
-              
+
               <Form onSubmit={handleSubmit}>
                 <Form.Group className="mb-3" controlId="formBasicEmail">
                   <Form.Label>Correo Electrónico</Form.Label>
@@ -89,9 +89,9 @@ const LoginFunc = ({ userData }) => {
                     defaultValue={password}
                   />
                 </Form.Group>
-                  <Button variant="primary" type="submit">
-                    Iniciar Sesión
-                  </Button>
+                <Button variant="primary" type="submit">
+                  Iniciar Sesión
+                </Button>
               </Form>
             </Card.Body>
             <Card.Footer>
@@ -100,12 +100,12 @@ const LoginFunc = ({ userData }) => {
           </Card>
 
           <Card style={{ maxWidth: '20rem' }}>
-            <Card.Img variant="top" src="../../../images/Logo.png"/>
+            <Card.Img variant="top" src="../../../images/Logo.png" />
             <Card.Body>
               <Card.Text>Visita nuestro catálogo en línea</Card.Text>
               <Button variant="primary" onClick={verCatalogo}>
-                    Ver productos
-                  </Button>
+                Ver productos
+              </Button>
             </Card.Body>
             <Card.Footer>
               <small className="text-muted">Área de Clientes</small>
@@ -113,13 +113,16 @@ const LoginFunc = ({ userData }) => {
           </Card>
         </CardGroup>
       ) : (
-        
-          <div>
-            <div id="volverProducto">
-            <a onClick={() => setClient("false")} href="#"> Volver</a>             
-            </div>
-            <Products />
-          </div>                
+
+        <div>
+          <Products />
+          <br/>
+          <div id="volverProducto">
+            <Button variant="outline-primary" size="lg" onClick={() => setClient("false")} href="#">
+              Volver
+            </Button>
+          </div>
+        </div>
       )}
     </div>
   );

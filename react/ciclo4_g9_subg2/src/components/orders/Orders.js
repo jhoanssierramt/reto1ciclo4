@@ -5,6 +5,7 @@ import { DetailOrder } from "../detail-order/DetailOrder";
 import * as moment from "moment";
 
 const serverUrl = "http://localhost:8080/";
+ReactModal.setAppElement('body');
 
 export const Orders = () => {
   const [stateSelect, setStateSelect] = useState("");
@@ -19,20 +20,21 @@ export const Orders = () => {
   const [showModal, setShowModal] = useState(false);
 
   useEffect(() => {
-    const getData = async () => {
-      try {
-        const url = `${serverUrl}/api/order/all`;
-        let response = await fetch(url);
-        response = await response.json();
-        console.log(`response`, response);
-        setBody(response);
-      } catch (error) {
-        console.log(`error`, error);
-      }
-    };
     getData();
   }, []);
 
+  const getData = async () => {
+    try {
+      const url = `${serverUrl}/api/order/all`;
+      let response = await fetch(url);
+      response = await response.json();
+      console.log(`response`, response);
+      setBody(response);
+    } catch (error) {
+      console.log(`error`, error);
+    }
+  };
+  
   function handleCloseModal() {
     setShowModal(false);
   }
@@ -57,26 +59,33 @@ export const Orders = () => {
   //   }
   // }
 
-  const getByDate =async () => {
-    try {
-      const url = `${serverUrl}/api/order/date/${dateSelect}/${saler}`;
-      let response = await fetch(url);
-      response = await response.json();
-      setBody(response);
-    } catch (error) {
-      console.log(`error`, error);
+  const getByDate = async () => {
+    if (saler === "" || dateSelect == "") {
+      alert("No deben haber campos vacíos (ID Vendedor y Fecha).");
+    } else {
+      try {
+        const url = `${serverUrl}/api/order/date/${dateSelect}/${saler}`;
+        let response = await fetch(url);
+        response = await response.json();
+        setBody(response);
+      } catch (error) {
+        console.log(`error`, error);
+      }
     }
-
   };
 
   const getByState = async () => {
-    try {
-      const url = `${serverUrl}/api/order/state/${stateSelect}/${saler}`;
-      let response = await fetch(url);
-      response = await response.json();
-      setBody(response);
-    } catch (error) {
-      console.log(`error`, error);
+    if (saler === "" || stateSelect === "") {
+      alert("No deben haber campos vacíos (ID Vendedor y Estado del Pedido). ");
+    } else {
+      try {
+        const url = `${serverUrl}/api/order/state/${stateSelect}/${saler}`;
+        let response = await fetch(url);
+        response = await response.json();
+        setBody(response);
+      } catch (error) {
+        console.log(`error`, error);
+      }
     }
   };
 
@@ -87,7 +96,7 @@ export const Orders = () => {
           <div className="card">
             <div className="card-body">
               <h5 className="card-title">Id Vendedor y Fecha Registo</h5>
-              <input className="form-control" placeholder="Id Vendedor" onChange={(event) => setSaler(event.target.value)}></input>
+              <input type="number" className="form-control" placeholder="Id Vendedor" onChange={(event) => setSaler(event.target.value)}></input>
               <input
                 className="form-control"
                 onChange={(event) => setDateSelect(event.target.value)}
@@ -99,21 +108,21 @@ export const Orders = () => {
             </div>
           </div>
         </div>
-      
+
 
         <div className="col-sm-6">
           <div className="card">
             <div className="card-body" >
-              <h5 className="card-title">Estado del Pedido</h5> 
-              <select className="form-control"defaultValue={"Seleccione..."} onChange={(event) => setStateSelect(event.target.value)}>
-               <option disabled>Seleccione...</option>
+              <h5 className="card-title">Estado del Pedido</h5>
+              <select className="form-control" defaultValue={"Seleccione..."} onChange={(event) => setStateSelect(event.target.value)}>
+                <option disabled>Seleccione...</option>
                 <option>Pendiente</option>
-                 <option>Aprobada</option>
-                  <option>Rechazada</option>
+                <option>Aprobada</option>
+                <option>Rechazada</option>
               </select>
               <br /><br />
               <button className="btn btn-info btn-lg" onClick={getByState}>
-               Buscar por estado
+                Buscar por estado
               </button>
             </div>
           </div>
@@ -145,14 +154,17 @@ export const Orders = () => {
                       Ver pedido
                     </button>
                   </td>
-                  
+
                 </tr>
               ))}
           </tbody>
         </Table>
+        <button className="btn btn-success btn-lg" onClick={getData}>
+          Mostrar Toda la Lista.
+        </button>
       </div>
       <ReactModal isOpen={showModal} contentLabel="Minimal Modal Example">
-        <button className= "btn btn-primary" onClick={handleCloseModal}>Cerrar Detalle</button>
+        <button className="btn btn-primary" onClick={handleCloseModal}>Cerrar Detalle</button>
         <DetailOrder orderId={orderId} />
       </ReactModal>
     </div>

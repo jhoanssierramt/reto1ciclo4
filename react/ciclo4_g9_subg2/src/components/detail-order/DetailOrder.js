@@ -15,48 +15,7 @@ export const DetailOrder = ({ orderId }) => {
     "Cantidad",
   ];
   const [body, setBody] = useState([]);
-  /**
-   * [
-    {
-      date: "2021-12-01",
-      id: 1654654,
-      state: "Aprobado",
-    },
-  ]
-   */
-
   const [bodyDetail, setBodyDetail] = useState([]);
-  /**
-   [
-    {
-      image:
-        "https://cdn2.iconfinder.com/data/icons/miscellaneous-31/60/price-tag-256.png",
-      name: "Mouse",
-      category: "Electrónico",
-      description: "Mouse USB",
-      price: 20000,
-      quantity: 5,
-    },
-    {
-      image:
-        "https://cdn2.iconfinder.com/data/icons/miscellaneous-31/60/price-tag-256.png",
-      name: "Teclado",
-      category: "Electrónico",
-      description: "teclado USB",
-      price: 15000,
-      quantity: 50,
-    },
-    {
-      image:
-        "https://cdn2.iconfinder.com/data/icons/miscellaneous-31/60/price-tag-256.png",
-      name: "Impresora",
-      category: "Electrónico",
-      description: "Impresora USB",
-      price: 200000,
-      quantity: 4,
-    },
-  ]
-   */
 
   useEffect(() => {
     console.log(`orderId`, orderId);

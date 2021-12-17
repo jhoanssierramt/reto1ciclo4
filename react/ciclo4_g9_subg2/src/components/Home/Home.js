@@ -1,6 +1,5 @@
-import "./home.css";
-import { useEffect,useState } from "react";
-import { Tabs, Tab } from "react-bootstrap";
+import { useEffect, useState } from "react";
+import { Tabs, Tab, Accordion, Badge, Button} from "react-bootstrap";
 import { useApp } from "../../context/GlobalSession";
 import LoginFunc from "../Login/LoginFunc";
 import { Orders } from "../orders/Orders";
@@ -12,24 +11,46 @@ export const Home = () => {
   const { user, setUser } = useApp();
   const { logout } = useApp();
   const [key, setKey] = useState('orders');
-
-  useEffect(() => {});
+  const [tipoUser, setTipoUser] = useState("");
+  useEffect(() => { 
+    console.log("TIPO", user.type);
+    if(user.type==="ADM"){
+      setTipoUser("Administrador");
+    }else if(user.type==="ASE"){
+      setTipoUser("Asesor");
+    }else if(user.type==="COORD"){
+      setTipoUser("Coordinador");
+    }else{
+      setTipoUser("No aplica");
+    }
+  });
 
   return (
     <div>
       {isLoged ? (
         <div>
-          <div className="izq">
-            <h6>
-              Bienvenido {user.name} {user.lastname}
-            </h6>
-            <a onClick={logout} href="#">
-              Cerrar sesión
-            </a>            
-          </div> 
-          <br/>
+          <div>
+            <Accordion defaultActiveKey="0">
+              <Accordion.Item eventKey="0">
+                <Accordion.Header>Perfil de Usuario</Accordion.Header>
+                <Accordion.Body>
+                  <h4 className="izq">
+                    Bienvenido {user.name}
+                  </h4>
+                  <h4><Badge bg="dark">{tipoUser}</Badge></h4>
+                  <h6>{user.email}</h6>
+                  <h6>CC. {user.identification}</h6>
+                  <h6>{user.zone}</h6>
+                  <Button variant="secondary" onClick={logout} href="#">
+                    Cerrar sesión
+                  </Button>
+                </Accordion.Body>
+              </Accordion.Item>
+            </Accordion>
+          </div>
+          <br />
           <Tabs defaultActiveKey="profile" id="uncontrolled-tab-example" className="mb-3"
-                activeKey={key} onSelect={(k) => setKey(k)}>
+            activeKey={key} onSelect={(k) => setKey(k)}>
             <Tab eventKey="orders" title="Órdenes">
               <Orders />
             </Tab>
@@ -40,12 +61,8 @@ export const Home = () => {
               <Products />
             </Tab>
           </Tabs>
-
-            
-         
-                    
         </div>
-        ) : (
+      ) : (
         <LoginFunc />
       )}
     </div>
